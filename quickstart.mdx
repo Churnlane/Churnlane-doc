@@ -1,47 +1,124 @@
 ---
-title: "Quickstart"
-description: "Begin with a guide on the fastest path to a successful outcome"
+title: "Get Started with Churnlane in Under 15 Minutes"
+sidebarTitle: "Quick Start"
+description: "Connect your billing provider, install the Churnlane SDK, and start seeing churn risk scores for your customers in minutes."
 ---
 
-Describe how someone begins using your product. What is the first thing they need to do? Are there any prerequisites?
+This guide walks you through everything you need to go from a blank Churnlane workspace to live risk scores on your customer base. By the end you'll have billing signals flowing in, product events tracked, and your dashboard populated with the accounts that need your attention most.
 
-A quickstart should take someone from zero to using your product. They'll get a quick win and a sense of what they can accomplish.
-
-## Prerequisites
-
-Before you begin, you must have:
-
-- Requirement one (for example, Node.js 18+, a free account, an API key)
-- Requirement two (for example, a compatible device, a compatible browser, a compatible operating system)
-
-## Get started
+<Note>
+  You need a Churnlane workspace to follow this guide. Churnlane is currently in private beta — request early access at [churnlane.com](https://churnlane.com) and you'll be notified when a spot opens up.
+</Note>
 
 <Steps>
-  <Step title="Install">
-    Describe how to install your product or sign up.
+  <Step title="Connect Your Billing Provider">
+    Go to **Settings → Integrations** in your Churnlane workspace and click the card for your billing provider.
 
-    ```bash
-    npm install your-package
+    - **Stripe** — click **Connect with Stripe** and complete the OAuth flow. Churnlane receives read-only access to your subscription and payment data; no charges or refunds can be made. Billing risk signals (failed cards, plan downgrades, upcoming renewals) are available the same day.
+    - **Paddle** — enter your Paddle vendor ID and API key, then add the Churnlane webhook URL to your Paddle notification settings.
+    - **Chargebee** — enter your Chargebee site name and API key. Churnlane will back-fill up to 90 days of subscription history on first sync.
+
+    Once connected, you'll see a green **Syncing** badge on the integration card and a confirmation in the activity log.
+  </Step>
+
+  <Step title="Install the SDK">
+    Install the Churnlane SDK in your application using your preferred package manager.
+
+    <CodeGroup>
+      ```bash npm
+      npm install @churnlane/sdk
+      ```
+
+      ```bash yarn
+      yarn add @churnlane/sdk
+      ```
+
+      ```bash pnpm
+      pnpm add @churnlane/sdk
+      ```
+    </CodeGroup>
+
+    If your app has no build step, you can load Churnlane via a script tag instead. Add the following to your HTML just before the closing `</body>` tag:
+
+    ```html Script tag
+    <script
+      src="https://cdn.churnlane.com/sdk/v1/churnlane.min.js"
+      data-key="YOUR_PUBLIC_KEY"
+      defer
+    ></script>
+    ```
+
+    The script tag embed supports the same `track` and `identify` calls as the npm package. See [SDK Reference](/sdk/overview) for the full API.
+  </Step>
+
+  <Step title="Initialize the SDK on Your Server">
+    Create a single shared Churnlane client using the secret key from **Settings → API Keys**. Initialise it in a module that runs on your server — never in browser-side code.
+
+    ```typescript server.ts
+    import { Churnlane } from "@churnlane/sdk";
+
+    export const churnlane = new Churnlane({
+      secretKey: process.env.CHURNLANE_SECRET_KEY, // set in your environment, never hard-coded
+    });
+    ```
+
+    <Warning>
+      Your secret key has write access to your workspace. Never expose it in client-side JavaScript, commit it to source control, or include it in a public bundle. Use an environment variable and load it at runtime.
+    </Warning>
+
+    You can verify the connection is working by calling `churnlane.ping()` during your app startup and checking the response in your logs.
+
+    ```typescript verify-connection.ts
+    const status = await churnlane.ping();
+    console.log(status); // { ok: true, workspace: "your-workspace-name" }
     ```
   </Step>
-  <Step title="Configure">
-    Describe any setup or configuration needed before first use.
 
-    ```bash
-    your-cli init
+  <Step title="Track Product Events">
+    Call `churnlane.track()` whenever a customer takes a meaningful action in your product. Churnlane uses these events to understand each account's engagement pattern and detect when it starts to change.
+
+    The example below tracks a user logging in. Add similar calls for core feature usage, onboarding milestones, and any action that signals active engagement in your product.
+
+    ```typescript track-event.ts
+    // Call this after your own authentication check, on the server.
+    await churnlane.track({
+      customerId: user.stripeCustomerId, // must match the ID in your billing provider
+      event: "login",
+      properties: {
+        method: "email",
+        sessionId: session.id,
+      },
+      timestamp: new Date(), // optional; defaults to now
+    });
     ```
+
+    You can also call `churnlane.identify()` to keep customer metadata — name, plan, company — in sync with your billing data:
+
+    ```typescript identify-customer.ts
+    await churnlane.identify({
+      customerId: user.stripeCustomerId,
+      traits: {
+        name: user.name,
+        email: user.email,
+        plan: subscription.plan,
+        company: user.companyName,
+      },
+    });
+    ```
+
+    There's no fixed event schema — you define the events that make sense for your product. See [Tracking Events](/sdk/tracking-events) for recommendations on which events have the most impact on churn scores.
   </Step>
-  <Step title="Run it">
-    Show the first thing a user does to see it working.
 
-    ```bash
-    your-cli start
-    ```
+  <Step title="Check Your Dashboard">
+    Once your billing provider is connected and the SDK is sending events, open your dashboard at [app.churnlane.com/overview](https://app.churnlane.com/overview).
+
+    - **Billing risk** is available immediately after your first integration syncs. Customers with recent failed payments, plan downgrades, or expiring cards will appear in the **At Risk** and **Critical** columns right away.
+    - **Usage signals** build over the first week as Churnlane establishes a baseline for each account. Until there's enough data, scores are marked with a **Warming up** indicator rather than a numeric value.
+
+    Click any flagged customer to see their risk score, the plain-English explanation, and the draft win-back action Churnlane has prepared. If you're happy with the draft, click **Approve** — if not, edit it first. Nothing is sent until you approve.
   </Step>
 </Steps>
 
 <Tip>
-  Give people a way to get help. This could be a link to a support page, a chat with a customer support agent, or a forum for your product.
-
-  Example: Need help? Reach out to us at [support@yourcompany.com](mailto:support@yourcompany.com).
+  Churnlane compares usage week-over-week relative to each customer's own normal. If an account is brand new, scores are held until there's a meaningful baseline to compare against — you'll see a clear message in the dashboard rather than a misleading early score.
 </Tip>

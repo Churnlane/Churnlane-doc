@@ -1,20 +1,45 @@
 ---
-title: "Introduction"
-description: "Welcome to your project"
+title: "Churnlane Documentation"
+sidebarTitle: "Home"
+description: "Learn how to set up Churnlane, connect your billing and product data, and start catching at-risk customers before they cancel."
 ---
 
-Write a short description of your product here. What it does, who it's for, and what they can accomplish with it.
+Welcome to the Churnlane docs. Churnlane monitors every subscription customer hourly, scores their churn risk against their own history, and writes a plain-English explanation of what's going wrong — so you can act before they ever hit the cancel button. These docs cover everything from connecting your first integration to approving AI-drafted win-back actions from the dashboard.
 
-<Tip>
-  Ready to make this your own? Start by editing this page. Update your `docs.json` file to customize your site. Then fill out the [Quickstart](/quickstart) page.
-</Tip>
+<CardGroup cols={2}>
+  <Card title="Quick Start" icon="rocket" href="/quickstart">
+    Connect your billing provider, install the SDK, and see your first risk scores in under 15 minutes.
+  </Card>
+  <Card title="How It Works" icon="circle-info" href="/how-it-works">
+    Learn how Churnlane spots at-risk accounts, explains the cause, and drafts a tailored fix.
+  </Card>
+  <Card title="Integrations" icon="plug" href="/integrations/stripe">
+    Connect Stripe, Paddle, Chargebee, Intercom, PostHog, HubSpot, and more.
+  </Card>
+  <Card title="SDK Reference" icon="code" href="/sdk/overview">
+    Explore the full JavaScript/TypeScript SDK API for tracking product events.
+  </Card>
+</CardGroup>
 
-<Card title="Quickstart" icon="rocket" href="/quickstart">
-  This card links to the quickstart page in your project.
-</Card>
-<Card title="Components" icon="puzzle-piece" href="https://mintlify.com/docs/components">
-  Add cards, callouts, steps, tabs, and more to design and structure your pages.
-</Card>
-<Card title="Settings" icon="gear" href="https://mintlify.com/docs/organize/settings">
-  Set your site name, branding, and navigation in the `docs.json` file.
-</Card>
+## Get Up and Running
+
+Follow these four steps to go from zero to your first flagged account.
+
+<Steps>
+  <Step title="Connect Your Billing Provider">
+    Link Stripe, Paddle, or Chargebee so Churnlane can detect billing risk signals — failed payments, plan downgrades, and upcoming renewals — from day one.
+  </Step>
+  <Step title="Install the SDK">
+    Add the Churnlane SDK to your app with `npm install @churnlane/sdk` and start sending product usage events. A script tag embed is also available for no-build-step setups.
+  </Step>
+  <Step title="Review At-Risk Accounts">
+    Open the dashboard at app.churnlane.com/overview to see every flagged customer, their risk score, and the plain-English explanation of why they're slipping.
+  </Step>
+  <Step title="Approve Win-Back Actions">
+    Churnlane drafts a tailored email, offer, or call prompt for each at-risk account. Review it, edit if you like, and approve — nothing reaches your customer until you say so.
+  </Step>
+</Steps>
+
+<Note>
+  Churnlane is currently in private beta. Early access opens in waves — join the waitlist at [churnlane.com](https://churnlane.com).
+</Note>

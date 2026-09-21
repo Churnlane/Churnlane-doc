@@ -1,0 +1,75 @@
+---
+title: "Approval Rules: Control What Churnlane Can Do Automatically"
+sidebarTitle: "Approval Rules"
+description: "Configure which Churnlane actions run automatically and which wait in your approval queue, giving you full control over customer-facing interventions."
+---
+
+Churnlane can take action on at-risk accounts automatically — sending retention emails, offering discounts, applying credits, and more. Approval rules let you decide exactly which of those actions happen without a human in the loop and which land in your queue for review first. You stay in control of every customer-facing moment, and you loosen that control only when you're ready.
+
+## How Approval Rules Work
+
+By default, every action type requires your approval before it reaches a customer. When Churnlane's scoring engine identifies an at-risk account and selects an intervention, it places that action in your approval queue rather than executing it immediately. Nothing goes out until you review it.
+
+Each action type has an independent toggle: **Approval Required** or **Autonomous**. Flip a toggle to autonomous mode and Churnlane executes that action type automatically when the conditions are met. Leave it in approval mode and every proposed action of that type waits in the queue.
+
+The two modes can be mixed freely. For example, you might let retention emails send autonomously while keeping discounts and credits behind approval.
+
+## Action Types
+
+Churnlane can propose and execute five categories of action. Each one maps to its own approval rule toggle.
+
+| Action Type | What It Does | Default State |
+|---|---|---|
+| **Retention Emails** | Sends a personalized email to an at-risk customer — check-ins, value reminders, or re-engagement sequences | Approval Required |
+| **Discounts** | Applies a percentage discount to the customer's next billing cycle or renewal | Approval Required |
+| **Credits** | Adds a monetary credit to the customer's account balance | Approval Required |
+| **Plan Changes** | Moves a customer to a different plan tier — typically a downgrade offer to prevent full cancellation | Approval Required |
+| **Free Month** | Grants one free billing period to a high-risk or high-value account as a retention gesture | Approval Required |
+
+Every action type ships in **Approval Required** mode. You opt into autonomous execution deliberately, not by accident.
+
+## Configuring Rules
+
+You manage approval rules from the Churnlane dashboard.
+
+<Steps>
+  <Step title="Open Automation Settings">
+    Go to **Settings → Automation → Approval Rules** in your Churnlane dashboard.
+  </Step>
+  <Step title="Review Each Action Type">
+    You'll see a row for each of the five action types, with its current mode shown on the right.
+  </Step>
+  <Step title="Toggle the Mode">
+    Click the toggle next to any action type to switch between **Approval Required** and **Autonomous**. The change takes effect immediately — no save step required.
+  </Step>
+  <Step title="Confirm Autonomous Actions (if enabling)">
+    When switching to Autonomous for the first time, Churnlane will ask you to confirm. This is intentional friction to prevent accidental changes.
+  </Step>
+</Steps>
+
+<Note>
+  Autonomous interventions are available on the **Growth** and **Scale** plans. On Starter, all action types remain in Approval Required mode. If you're on Starter and see a locked toggle, upgrading to Growth unlocks autonomous execution.
+</Note>
+
+## The Approval Queue
+
+When an action type is set to **Approval Required**, every proposed action for that type flows into your approval queue. You'll find the queue at **Home → Approval Queue** in your dashboard.
+
+Each queued item shows you:
+
+- **The customer** — name, plan, and MRR
+- **Churn risk score** — the score that triggered the action, and the signals driving it
+- **Proposed action** — exactly what Churnlane wants to do and why
+- **Preview** — for emails, a full preview of the message before it sends
+
+From the queue, you can:
+
+- **Approve** — the action executes immediately
+- **Edit then Approve** — modify the action (e.g., change the discount percentage) before it sends
+- **Dismiss** — decline the action; the account stays in monitoring
+
+Dismissed actions don't re-queue automatically. If the account's risk score changes significantly, Churnlane may propose a new action.
+
+<Tip>
+  Start with everything in Approval Required mode — even if it means more queue time at first. Reviewing proposed actions for the first few weeks teaches you how Churnlane reasons about your customers. Once you trust the signals and the proposed interventions look consistently good, enable autonomous mode for the lower-stakes action types (like retention emails) and work your way up to discounts and credits.
+</Tip>

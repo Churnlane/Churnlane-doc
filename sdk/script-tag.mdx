@@ -1,0 +1,68 @@
+---
+title: "Embed Churnlane Without a Build Step Using the Script Tag"
+sidebarTitle: "Script Tag"
+description: "Use the Churnlane script tag to send product usage events from any web app without installing a package or running a build step."
+---
+
+If your application doesn't use a modern build pipeline — or if you want to add Churnlane tracking to a legacy codebase without touching its dependencies — the script tag embed lets you get up and running with a single HTML snippet. Drop the tag into your page, and a global `churnlane` object becomes available in the browser for firing product events.
+
+<Note>
+  The script tag uses your **publishable key** (starts with `pk_`), which is safe to include in browser-rendered HTML. Never use your secret key in a script tag or any other client-side context.
+</Note>
+
+## Adding the Script
+
+Paste the following snippet into the `<head>` or just before the closing `</body>` tag of your HTML. Replace `YOUR_PUBLISHABLE_KEY` with the publishable key from **Settings → API Keys**.
+
+```html
+<script
+  src="https://cdn.churnlane.com/sdk.js"
+  data-key="YOUR_PUBLISHABLE_KEY">
+</script>
+```
+
+The script loads asynchronously and exposes a `churnlane` global on the `window` object. It's lightweight and has no third-party dependencies.
+
+## Tracking Events
+
+Once the script is on the page, call `churnlane.track()` anywhere in your JavaScript. Pass the account ID, user ID, event name, and an optional properties object as positional arguments.
+
+```html
+<script>
+  // Track a feature interaction
+  churnlane.track('acct_123', 'user_456', 'feature_used', { feature: 'dashboard' });
+
+  // Track a login
+  churnlane.track('acct_123', 'user_456', 'user_login');
+</script>
+```
+
+You can call `churnlane.track()` from any inline `<script>` block or external JavaScript file loaded after the Churnlane script tag. Use your application's templating system to substitute real account and user IDs at render time rather than hard-coding them.
+
+```html
+<!-- Example: server-rendered template substituting real IDs -->
+<script>
+  churnlane.track('{{ current_account.id }}', '{{ current_user.id }}', 'user_login');
+</script>
+```
+
+## Limitations vs. the npm SDK
+
+The script tag is a convenient starting point, but it has constraints compared to using `@churnlane/sdk/server` directly:
+
+- **No server-side `identify()`** — The script tag cannot call `identify()`, so Churnlane won't receive account traits like `plan`, `mrr`, or `seats` unless you add a server-side identify call separately. Without these traits, scoring still works but has less context.
+- **Browser events only** — You can only track events that happen in the browser. Server-side events (background jobs, webhook handlers, API actions) require the npm SDK.
+- **No TypeScript types** — The global `churnlane` object is untyped. If you want autocomplete and type safety, use the npm package instead.
+- **No automatic retries** — The browser embed does not retry failed event calls the way the server SDK does.
+
+<Tip>
+  For the most accurate churn scoring, combine the script tag with a lightweight server-side `identify()` call using the full SDK. The script tag handles browser-fired events, while a single server route calls `identify()` on login to keep account traits — especially `mrr` and `seats` — up to date. See the [Installation guide](/sdk/installation) to set up the server client alongside the script tag.
+</Tip>
+
+## Getting Your Publishable Key
+
+1. Open the Churnlane dashboard and go to **Settings → API Keys**.
+2. Copy the key labeled **Publishable Key** — it begins with `pk_`.
+3. Paste it as the value of `data-key` in your script tag.
+
+Your publishable key is safe to include in HTML that end users can view. It can only be used to send inbound events to your workspace — it cannot read data, modify settings, or access any other part of the Churnlane API.

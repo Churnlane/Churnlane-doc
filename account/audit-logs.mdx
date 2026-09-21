@@ -1,0 +1,67 @@
+---
+title: "Audit Logs: Track Every Action in Your Churnlane Workspace"
+sidebarTitle: "Audit Logs"
+description: "Audit logs record every automated and manually approved action in Churnlane, with timestamps, outcomes, and the customer affected. Available on Scale."
+---
+
+Every action Churnlane takes — whether it runs autonomously, after a team member clicks Approve, or is escalated because it exceeded a permission limit — is written to the audit log. The log gives you a complete, tamper-evident record of what happened in your workspace, when it happened, who was involved, and what the outcome was. Use it for compliance reviews, internal post-mortems, or tuning your approval rules over time.
+
+<Note>
+  Audit logs are a **Scale plan** feature. On Starter and Growth, high-level outcome summaries are available in your email digests, but the full structured audit log with export capability requires Scale. See [Churnlane Plans](/account/plans) for details.
+</Note>
+
+## What Is Logged
+
+Every log entry captures the following fields:
+
+| Field | Description |
+|---|---|
+| **Timestamp** | Date and time the action was executed or escalated, in UTC |
+| **Action type** | One of: Retention Email, Discount, Credit, Plan Change, Free Month |
+| **Customer account** | The customer name, ID, and plan at the time of the action |
+| **Triggered by** | `Autonomous` if the action ran without human approval; the approving team member's name and email if manually approved |
+| **Outcome** | `Sent`, `Skipped`, `Failed`, or `Escalated` (exceeded permission limit) |
+| **Amount** | For discounts: the percentage applied. For credits: the value applied. Blank for other action types. |
+| **Churn score at time of action** | The score that triggered the intervention |
+| **Notes** | For escalated actions, the permission limit that was exceeded and the proposed value |
+
+Actions that were placed in the approval queue and then **dismissed** (not approved) are also logged, with an outcome of `Dismissed` and the team member who dismissed them.
+
+## Viewing Logs
+
+<Steps>
+  <Step title="Open Audit Logs">
+    Go to **Settings → Security → Audit Logs** in your Churnlane dashboard.
+  </Step>
+  <Step title="Set a Date Range">
+    Use the date picker to select the period you want to review. The log displays the most recent 90 days by default.
+  </Step>
+  <Step title="Filter by Action Type or Account">
+    Use the filter bar to narrow entries by action type (e.g., show only Discount entries), by triggered-by (Autonomous vs. a specific team member), or by customer account name or ID.
+  </Step>
+  <Step title="Review Entries">
+    Click any log entry to expand it and see the full detail view, including the churn signals that were active at the time and a link to the customer's account in Churnlane.
+  </Step>
+</Steps>
+
+## Exporting Logs
+
+You can export any filtered view of the audit log as a CSV file for offline analysis, compliance reporting, or sharing with stakeholders who don't have Churnlane access.
+
+To export:
+
+1. Apply any filters you want (date range, action type, etc.)
+2. Click **Export CSV** in the top-right of the log view
+3. The CSV will download to your browser immediately if the result set is under 10,000 rows. For larger exports, Churnlane will email a download link to the exporting user within a few minutes.
+
+The CSV preserves all fields shown in the table view, including the full timestamp in ISO 8601 format.
+
+## Log Retention
+
+Audit log entries are retained for **12 months** from the date of the action. Entries older than 12 months are automatically purged.
+
+If you need logs retained for longer — for example, to meet a compliance framework's requirements — export the relevant period as CSV before the 12-month mark and store it in your own systems.
+
+<Tip>
+  Build a monthly habit of reviewing your audit log alongside your churn metrics. Patterns in the log — for example, a high rate of `Escalated` discount actions — often signal that your permission limits or approval rules need tuning. The log tells you what happened; your churn numbers tell you whether it worked.
+</Tip>

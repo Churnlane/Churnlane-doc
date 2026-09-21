@@ -1,0 +1,42 @@
+---
+title: "Connect PostHog to Add Product Usage to Churn Scores"
+sidebarTitle: "PostHog"
+description: "Pull PostHog product analytics into Churnlane to detect drops in feature usage and session frequency that signal churn risk."
+---
+
+A customer who stops using your product is on a path to cancellation — often weeks before they click the cancel button. By connecting PostHog to Churnlane, you give the risk engine visibility into how each customer is actually engaging with your product: which features they use, how often they log in, and whether activity is trending up or down. This makes churn risk scores significantly more predictive, especially for accounts whose billing data looks healthy on the surface.
+
+## Connect PostHog
+
+<Steps>
+  <Step title="Open the PostHog integration page">
+    In the Churnlane dashboard, navigate to **Settings > Integrations > PostHog**.
+  </Step>
+  <Step title="Enter your PostHog project API key and host">
+    In PostHog, go to **Project Settings** and copy your **Project API Key**. Paste it into the **Project API Key** field in Churnlane. In the **Host** field, enter your PostHog host:
+    - If you use PostHog Cloud (US), enter `https://us.i.posthog.com`
+    - If you use PostHog Cloud (EU), enter `https://eu.i.posthog.com`
+    - If you are self-hosting PostHog, enter your own instance URL
+
+    Click **Save** to complete the connection.
+  </Step>
+</Steps>
+
+## What PostHog adds to churn risk scores
+
+After connecting, Churnlane reads event and session data from your PostHog project and uses the following signals to enrich customer risk profiles:
+
+| Signal | How it enriches churn risk |
+|---|---|
+| **Feature usage trends** | Declining use of core features predicts disengagement. |
+| **Session frequency** | Fewer or shorter sessions over time are a reliable early churn signal. |
+| **Inactive seats** | Seats that have gone dark within a team account raise the overall account risk. |
+| **Key event drop-off** | Customers who stop triggering your most important events are flagged immediately. |
+
+<Note>
+  Product usage signals improve in accuracy over time. Expect the most meaningful enrichment after approximately **one week** of data has been collected. Churnlane will still score customers before that point, but the usage-based component of the score will become more reliable as more event history accumulates.
+</Note>
+
+<Tip>
+  You can use the [Churnlane SDK](/sdk/overview) (`@churnlane/sdk`) instead of — or alongside — the PostHog integration to send product usage events directly to Churnlane. The SDK is a good fit if you want to track events that are specific to churn risk and do not need them to appear in PostHog, or if you want to send enriched properties that Churnlane can use but PostHog does not capture.
+</Tip>

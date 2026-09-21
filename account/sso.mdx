@@ -1,0 +1,76 @@
+---
+title: "Single Sign-On (SSO) for Churnlane Teams"
+sidebarTitle: "SSO"
+description: "Enable SSO on your Churnlane workspace so team members sign in through your identity provider. Available on the Scale plan."
+---
+
+Single sign-on lets your team authenticate with Churnlane through your existing identity provider rather than managing a separate set of credentials. Once SSO is enabled, new team members sign in via your IdP, and your IT team retains central control over access — including the ability to deprovision a user by removing them from your directory without touching Churnlane directly.
+
+<Note>
+  SSO is a **Scale plan** feature. If you're on Starter or Growth and need SSO for your team, [upgrade your plan](/account/plans) or contact us at support@churnlane.com to discuss your options.
+</Note>
+
+## Supported Providers
+
+Churnlane supports any **SAML 2.0-compatible** identity provider. Providers known to work well with Churnlane's SSO configuration include:
+
+- **Okta**
+- **Google Workspace**
+- **Microsoft Azure AD** (now Microsoft Entra ID)
+- **OneLogin**
+- **Ping Identity**
+- Any other SAML 2.0-compliant IdP
+
+If your provider supports SAML 2.0 and isn't on this list, it will almost certainly work. Contact support@churnlane.com if you run into provider-specific issues.
+
+## Enabling SSO
+
+<Steps>
+  <Step title="Open SSO Settings">
+    Go to **Settings → Security → SSO** in your Churnlane dashboard. You'll see the SSO configuration panel with your workspace's unique SAML endpoint.
+  </Step>
+  <Step title="Download Churnlane's SAML Metadata">
+    Click **Download SAML Metadata** to get the XML metadata file. You'll need this when creating the Churnlane application in your identity provider.
+  </Step>
+  <Step title="Configure Your Identity Provider">
+    In your IdP, create a new SAML application for Churnlane. Upload the SAML metadata file you downloaded, or manually enter the values shown on the SSO settings page:
+    - **ACS URL** (Assertion Consumer Service URL)
+    - **Entity ID** (also called Audience URI)
+    - **Name ID format** — use Email Address
+  </Step>
+  <Step title="Upload Your IdP Metadata or Enter SSO Details">
+    Back in Churnlane, either upload your IdP's SAML metadata XML, or manually enter:
+    - Your IdP's **SSO URL** (the SAML sign-in endpoint)
+    - The **X.509 certificate** from your IdP
+  </Step>
+  <Step title="Test the Connection">
+    Click **Test SSO**. Churnlane will open a test sign-in flow in a new tab. Complete the sign-in using your IdP credentials. If the test succeeds, you'll see a confirmation message.
+  </Step>
+  <Step title="Enable SSO">
+    Once the test passes, click **Enable SSO**. SSO is now active for your workspace.
+  </Step>
+</Steps>
+
+<Warning>
+  Before enabling SSO, make sure at least one admin account is correctly configured in your IdP. If SSO is misconfigured and you enable it, you could lock your team out of the workspace. Keep the SSO settings tab open until you've confirmed a full sign-in works end to end.
+</Warning>
+
+## What Happens After Enabling SSO
+
+Once SSO is active on your workspace:
+
+- **New team members** must sign in via your identity provider. The standard email/password login option is hidden for your workspace domain.
+- **Existing team members** are prompted to link their Churnlane account to their IdP identity the next time they sign in. This is a one-time step that takes about 30 seconds.
+- **Deprovisioned users** who are removed from your IdP will no longer be able to access Churnlane on their next sign-in attempt.
+
+Admin accounts configured before SSO was enabled retain password-based login as a fallback, in case SSO needs to be debugged or reconfigured.
+
+## Troubleshooting
+
+**Certificate rotation:** If your IdP rotates its signing certificate, Churnlane will start rejecting SAML assertions. Re-upload the new certificate at **Settings → Security → SSO → Update Certificate** before or immediately after your IdP rotates. Most IdPs support dual-cert transitional periods — use that window to update Churnlane without a login outage.
+
+**Domain mismatch errors:** Churnlane validates that the email address in the SAML assertion matches your workspace's verified domain. If team members see domain mismatch errors, check that the Name ID attribute in your IdP application is configured to pass the user's work email address (not a username or internal ID).
+
+**Sign-in loops:** If users are redirected back to the IdP repeatedly without completing sign-in, check that the ACS URL in your IdP matches exactly what Churnlane shows in **Settings → Security → SSO**. Trailing slashes and HTTP vs. HTTPS mismatches are common culprits.
+
+**Still stuck?** Email **support@churnlane.com** with your workspace name and a description of the error. Include a screenshot of the SAML error message if your IdP shows one — this speeds up diagnosis significantly.

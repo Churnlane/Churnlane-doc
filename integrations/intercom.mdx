@@ -1,0 +1,35 @@
+---
+title: "Connect Intercom to Enrich Churn Signals with Support Data"
+sidebarTitle: "Intercom"
+description: "Link Intercom to Churnlane so support ticket sentiment and conversation health contribute to each customer's churn risk score."
+---
+
+Support interactions are one of the strongest leading indicators of churn. A customer who opens multiple frustrated tickets or goes silent after a poor support experience is at far greater risk than their billing data alone might reveal. By connecting Intercom to Churnlane, you add a layer of support signal — conversation sentiment, ticket escalations, and engagement frequency — that makes churn risk scores more accurate and more actionable for your team.
+
+## Connect Intercom
+
+<Steps>
+  <Step title="Open the Intercom integration page">
+    In the Churnlane dashboard, navigate to **Settings > Integrations > Intercom**.
+  </Step>
+  <Step title="Authorize the connection">
+    Click **Connect with Intercom**. You will be taken to Intercom's authorization screen. Select the Intercom workspace you want to connect and click **Authorize access**. Churnlane redirects you back to the Integrations page, where the Intercom tile will show a green **Connected** badge.
+  </Step>
+</Steps>
+
+## What Intercom adds to churn risk scores
+
+Once connected, Churnlane reads conversation data from Intercom and uses the following signals to enrich each customer's risk profile:
+
+| Signal | How it enriches churn risk |
+|---|---|
+| **Ticket sentiment trends** | Negative sentiment patterns over time raise a customer's risk score. |
+| **Open and escalated tickets** | Unresolved or escalated issues indicate friction that can drive churn. |
+| **Conversation frequency** | A sudden spike or drop in support contact often precedes cancellation. |
+| **Response and resolution times** | Slow resolutions on critical issues correlate with customer dissatisfaction. |
+
+Churnlane matches Intercom conversations to customers using their email address. Ensure the email addresses in Intercom align with those in your connected billing integration for the best match rate.
+
+<Note>
+  Intercom enriches existing churn risk scores — it does not replace billing data. For the most accurate risk signals, connect at least one billing integration (Stripe, Paddle, or Chargebee) alongside Intercom. Billing events provide the foundational risk baseline; Intercom adds nuance and early warning signals on top.
+</Note>

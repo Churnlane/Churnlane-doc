@@ -1,0 +1,79 @@
+---
+title: "How Churnlane Detects and Prevents Churn"
+sidebarTitle: "How It Works"
+description: "Understand the four-step process Churnlane uses to spot at-risk customers, explain the cause, draft a fix, and act once you approve."
+---
+
+Research consistently shows that churn starts six weeks or more before a customer clicks cancel — they've already mentally moved on long before they take action. By the time a cancellation email lands in your inbox, the relationship is usually over. Churnlane is built around that insight: it watches for the early behavioural shifts that predict cancellation, surfaces them while there's still time to do something meaningful, and has a tailored response ready for you to approve the moment a risk is detected.
+
+## The Four Steps
+
+<Steps>
+  <Step title="It Spots Them">
+    Every account in your workspace is re-scored hourly. Churnlane doesn't compare your customers to an industry benchmark or a generic cohort — it compares each account to its own historical behaviour. A power user who logs in five times a day looks very different from a low-engagement account that logs in once a week, and Churnlane treats them accordingly.
+
+    When an account's pattern starts to deviate — fewer logins, a core feature going unused, support tickets spiking — the score moves. If it crosses the threshold for your alert settings, the account surfaces in your dashboard automatically.
+  </Step>
+  <Step title="It Tells You Why">
+    Every flagged account comes with a single plain-English sentence that names the most likely cause — for example:
+
+    > *"Onboarding stalled at SSO setup three weeks ago and the team hasn't returned since."*
+
+    Below that sentence, Churnlane displays the individual signals ranked by their contribution to the score: how much each factor — a failed payment, a drop in seat activity, a run of frustrated support tickets — is actually driving the risk. You can see the evidence, judge it yourself, and decide whether to act.
+  </Step>
+  <Step title="It Drafts the Fix">
+    Once a risk is flagged, Churnlane generates a win-back action tailored to that customer's specific situation. The type of action depends on the cause:
+
+    - A **personal email** from your team when the issue is engagement or onboarding
+    - A **targeted offer** (discount, extension, plan adjustment) when the signal is price sensitivity or a downgrade
+    - A **suggested call agenda** for your CS team when the account is high-value or the situation is complex
+
+    The draft is written using the customer's name, their plan, their usage history, and the specific signals driving their risk score. It reads like a message your best support rep would write — because the context driving it is just as rich.
+  </Step>
+  <Step title="You Approve, It Sends">
+    Nothing goes to your customer until you review it. Open the flagged account in your dashboard, read the draft, and edit it if you want to personalise it further. When you're satisfied, click **Approve**.
+
+    Approved actions go out through your own tools — emails through your connected inbox, offers through Stripe or Chargebee, call tasks through HubSpot. Your customer receives a message that comes from your domain, your brand, and your team. Churnlane logs the outcome so you can see whether the action recovered the account, and feeds that result back into future scoring.
+  </Step>
+</Steps>
+
+## Risk Scores
+
+Churnlane expresses churn risk as a number from 0 to 100 for every active customer.
+
+- **0–39 — Healthy.** Normal engagement. No action needed.
+- **40–59 — Watch.** Early signals present. Worth keeping an eye on but not urgent.
+- **60–69 — At Risk.** Clear pattern of disengagement. Review the account and consider outreach.
+- **70–100 — Critical.** Strong churn signal. An action draft is ready and waiting for your approval.
+
+Scores are always relative to that account's own baseline, not an industry average or your median customer. A score of 75 means this customer is behaving significantly worse than *they* normally do — which is a far more reliable signal than a generic threshold.
+
+## Signals Churnlane Monitors
+
+Churnlane draws on signals across three categories: product usage, billing events, and support activity.
+
+| Signal | What Churnlane Looks For |
+| --- | --- |
+| **Login frequency** | Drop-off versus the account's own weekly average |
+| **Seat activity** | Number of distinct users active versus total seats purchased |
+| **Core feature usage** | Decline in the features most correlated with retention in your product |
+| **Onboarding progress** | Stalled steps, incomplete setups, long gaps between milestones |
+| **Support ticket sentiment** | Frustration keywords, escalation patterns, unresolved tickets |
+| **Failed payments** | First failure, retry count, and time since last successful charge |
+| **Plan downgrades** | Moves to lower tiers or removal of paid add-ons |
+| **Upcoming renewals** | Accounts approaching renewal with a declining trend |
+
+The weight each signal carries in a given score depends on which signals have historically predicted churn in your specific customer base. Churnlane recalibrates those weights as it learns from your data.
+
+## Portfolio Health
+
+Your dashboard gives you a real-time snapshot of your entire customer base broken into four health categories.
+
+- **Healthy** — accounts with stable or improving scores. No action required.
+- **Watch** — accounts showing early signals. Churnlane is monitoring them closely.
+- **At Risk** — accounts with a clear downward trend. Review flagged explanations and consider proactive outreach.
+- **Critical** — accounts with a high-confidence churn signal. Win-back action drafts are ready and waiting for your approval.
+
+The portfolio view makes it easy to see at a glance whether your overall retention health is improving or deteriorating, and to prioritise your team's attention where it will have the most impact.
+
+For a deeper look at how scores are calculated and how to tune your alert thresholds, see the [Churn Scoring](/features/churn-scoring) reference.

@@ -1,0 +1,91 @@
+---
+title: "Automated Payment Recovery for Failed Cards"
+sidebarTitle: "Payment Recovery"
+description: "Churnlane automatically follows up on every failed payment — emailing customers, retrying cards, and tracking recovery until the invoice clears."
+---
+
+Failed payments are one of the most recoverable causes of involuntary churn — but only if you follow up fast and consistently. Churnlane detects every card decline the moment it happens, emails the customer, retries the card on an intelligent schedule, and keeps following up until the invoice is paid or the recovery window closes. You don't have to remember to chase anyone, and nothing falls through the cracks.
+
+## How Recovery Works
+
+<Steps>
+  <Step title="Card declines">
+    A customer's card is charged and the payment fails. Churnlane receives the decline event from your billing provider immediately.
+  </Step>
+  <Step title="Churnlane detects it">
+    The failed invoice is logged, the account's risk score is updated to reflect the billing event, and the recovery sequence begins automatically.
+  </Step>
+  <Step title="Customer is emailed">
+    Churnlane sends a personalised email to the customer explaining that their payment didn't go through and prompting them to update their card. The email uses the customer's name, the specific invoice amount, and a direct link to update billing details.
+  </Step>
+  <Step title="Card is retried">
+    After a waiting period, Churnlane retries the card. The retry schedule is designed to maximise recovery without triggering issuer blocks — retries are spaced to respect card network best practices.
+  </Step>
+  <Step title="Follow-up continues">
+    If the first retry doesn't succeed, Churnlane sends a follow-up email and retries again. This cycle continues until the invoice is paid or the maximum follow-up window is reached.
+  </Step>
+  <Step title="Invoice closes">
+    The invoice is marked **Recovered** (paid) or **Exhausted** (follow-up window closed without payment). Both outcomes are logged and reflected in the revenue dashboard.
+  </Step>
+</Steps>
+
+## Recovery Stats
+
+The Payment Recovery dashboard shows a funnel that tracks every invoice from the first decline to the final outcome. Here's what each metric means:
+
+| Metric | What It Counts |
+|---|---|
+| **Payments failed** | Total invoices that entered the recovery queue with a declined card. |
+| **Customers emailed** | Invoices where at least one recovery email was successfully delivered. |
+| **Cards retried** | Invoices where Churnlane attempted at least one automatic card retry. |
+| **Paid in the end** | Invoices that were ultimately collected — either through a retry or after the customer updated their card. |
+
+**Example funnel**
+
+| Stage | Count |
+|---|---|
+| Payments failed | 41 |
+| Customers emailed | 41 |
+| Cards retried | 38 |
+| Paid in the end | 29 |
+
+In the example above, 29 out of 41 failed invoices were recovered — a 71% recovery rate — without any manual intervention from your team.
+
+<Note>
+  Payment recovery requires a Stripe or Chargebee integration. Churnlane cannot detect decline events or trigger retries without a live connection to your billing provider. Connect or verify your integration in **Dashboard → Integrations**.
+</Note>
+
+## Customising Follow-ups
+
+You control how aggressively Churnlane pursues each failed invoice. In **Dashboard → Payment Recovery Settings**, you can configure:
+
+- **Follow-up schedule** — the number of days between each email and retry attempt.
+- **Maximum attempts** — how many retry cycles to run before marking an invoice as exhausted.
+- **Email content** — customise the subject line and body of each recovery email to match your brand voice.
+
+Churnlane supports two **approval modes** for recovery emails:
+
+<CardGroup cols={2}>
+  <Card title="Auto-send" icon="bolt">
+    Recovery emails go out automatically on the configured schedule. Best for teams that want zero manual overhead on payment follow-up.
+  </Card>
+  <Card title="Approval Queue" icon="inbox">
+    Each recovery email is drafted and held for a team member to review before sending. Use this if you want a human eye on high-value accounts before outreach goes out.
+  </Card>
+</CardGroup>
+
+<Tip>
+  Use **Approval Queue** for accounts above a certain MRR threshold if your CS team has relationship context that should influence how the recovery email is worded. You can set an MRR floor in Settings so high-value accounts always get a human review.
+</Tip>
+
+## Reporting
+
+Every recovered invoice is recorded in the **Revenue Dashboard** under **Invoices Recovered**. The metric shows both the count of recovered invoices and the total dollar value collected.
+
+Recovered invoices are tracked separately from retained plans (accounts kept through the cancel flow). This separation means:
+
+- Your **Kept MRR** figure reflects only accounts that chose to stay after a cancellation intent.
+- Your **Invoices Recovered** figure reflects only revenue collected from failed payments.
+- There is no double-counting: if an account had a failed payment recovered *and* accepted a cancel flow offer, each event contributes to its own metric independently.
+
+You can filter the Revenue Dashboard by date range to see recovery performance week-over-week or month-over-month, and export the underlying invoice list for reconciliation.

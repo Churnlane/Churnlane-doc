@@ -1,13 +1,11 @@
 {
-  "$schema": "https://mintlify.com/docs.json",
-  "name": "Churnlane",
+  "projectType": "saas",
+  "projectName": "Churnlane",
+  "projectDescription": "Churnlane detects at-risk subscription customers before they cancel, explains why in plain English, and runs AI-powered win-back actions once you approve them.",
   "theme": "willow",
-  "colors": {
-    "primary": "#2450e8",
-    "light": "#ffffff",
-    "dark": "#7c8484"
-  },
-  "favicon": "https://media.brand.dev/f1140337-4596-490c-bfd1-0d553af95543.png",
+  "primaryColor": "#2450e8",
+  "lightColor": "#ffffff",
+  "darkColor": "#7c8484",
   "navigation": {
     "tabs": [
       {
@@ -76,11 +74,24 @@
       }
     ]
   },
-  "navbar": {
-    "primary": {
-      "type": "button",
-      "label": "Get Early Access",
-      "href": "https://churnlane.com/#access"
-    }
-  }
+  "keyFeatures": [
+    "Hourly churn risk scoring with plain-English explanations",
+    "Cancel flow agent that offers personalized retention offers",
+    "Automated payment recovery for failed cards and declined invoices",
+    "AI-drafted support replies with full customer context",
+    "Approval guardrails — nothing reaches customers without your sign-off",
+    "Integrations with Stripe, Paddle, Chargebee, Intercom, PostHog, and HubSpot",
+    "Revenue impact tracking (plans kept vs. invoices recovered)",
+    "Autonomous intervention controls with configurable permissions"
+  ],
+  "publicApiSurface": [
+    "npm install @churnlane/sdk",
+    "SDK browser and server entry points",
+    "Script tag embed (no build step)",
+    "Stripe one-click OAuth connection",
+    "Paddle, Chargebee billing integrations",
+    "Intercom, PostHog, HubSpot data integrations",
+    "Approval rules configuration",
+    "Action permissions (emails, discounts, credits, plan changes, free months)"
+  ]
 }

@@ -1,0 +1,57 @@
+---
+title: "Churnlane: Stop Churn Before Customers Cancel"
+sidebarTitle: "Introduction"
+description: "Churnlane monitors your subscription customers hourly, scores churn risk with plain-English explanations, and drafts win-back actions for your approval."
+---
+
+Most subscription businesses only learn a customer is leaving when the cancellation email lands in their inbox — by then it's too late. Churnlane changes that. It monitors every customer hourly, compares their behaviour against their own baseline, and flags anyone whose engagement is slipping. When it finds a risk, it tells you exactly why in plain English and drafts a personalised win-back action ready for your approval. You stay in control; Churnlane does the work.
+
+## How Churnlane Works
+
+Churnlane runs a continuous four-step loop for every customer in your account.
+
+1. **It spots them.** Every account is re-scored hourly against its own historical patterns, not industry averages. A customer who normally logs in daily but hasn't in a week stands out immediately.
+2. **It tells you why.** You see one plain-English sentence — for example, "Onboarding stalled at SSO setup three weeks ago" — with ranked evidence underneath so you can judge for yourself.
+3. **It drafts the fix.** Churnlane writes a win-back email, a targeted offer, or a suggested call agenda tailored to that specific customer's situation.
+4. **You approve, it sends.** Nothing goes to your customer until you review and approve it. Actions go out through your own Stripe account, inbox, or helpdesk so they feel native to your brand.
+
+## Key Features
+
+<CardGroup cols={2}>
+  <Card title="Churn Scoring" icon="chart-line">
+    Hourly risk scores from 0–100 for every customer, each benchmarked against that account's own history. Anything over 70 surfaces in your alert queue automatically.
+  </Card>
+  <Card title="Cancel Flow Agent" icon="shield-halved">
+    An AI agent that engages customers who reach your cancellation flow, surfaces retention offers in real time, and logs outcomes — without blocking anyone who genuinely wants to leave.
+  </Card>
+  <Card title="Payment Recovery" icon="credit-card">
+    Detects failed payments and upcoming card expiries early, then drafts recovery sequences that go out at the right moment with the right message.
+  </Card>
+  <Card title="AI Support Drafts" icon="message-lines">
+    Monitors support ticket sentiment for frustration signals and drafts proactive outreach before a complaint turns into a cancellation.
+  </Card>
+</CardGroup>
+
+## Integrations
+
+Churnlane pulls data from the tools you already use.
+
+**Billing providers** — Connect [Stripe](/integrations/stripe), [Paddle](/integrations/paddle), or [Chargebee](/integrations/chargebee) to bring in subscription events, payment failures, and plan changes. Stripe connects in one click via OAuth; Paddle and Chargebee use a webhook and API key.
+
+**Product and support tools** — Connect [PostHog](/integrations/posthog) or the Churnlane SDK to track in-app events, [Intercom](/integrations/intercom) to read support sentiment, and [HubSpot](/integrations/hubspot) to keep your CRM in sync with every risk flag and win-back action.
+
+## Plans
+
+Churnlane is available on three plans during early access. All plans include every feature; limits apply to the number of active customers scored.
+
+| Plan    | Active Customers | Best For                               |
+| ------- | ---------------- | -------------------------------------- |
+| Starter | Up to 1,000      | Early-stage SaaS and indie products    |
+| Growth  | Up to 25,000     | Scaling teams with a CS function       |
+| Scale   | Unlimited        | High-volume and enterprise subscribers |
+
+Pricing details are available on [churnlane.com](https://churnlane.com). During private beta, all early-access customers are onboarded on a custom basis.
+
+<Tip>
+  Ready to see your first risk scores? Head to the [Quick Start guide](/quickstart) to connect your billing provider and install the SDK in under 15 minutes.
+</Tip>

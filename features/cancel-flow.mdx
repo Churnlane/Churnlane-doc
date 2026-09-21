@@ -1,0 +1,78 @@
+---
+title: "Cancel Flow Agent: Retain Customers at the Exit Door"
+sidebarTitle: "Cancel Flow"
+description: "When a customer clicks cancel, Churnlane presents a personalized fix for their actual problem instead of a generic discount, giving them a reason to stay."
+---
+
+The moment a customer clicks **Cancel**, Churnlane intercepts that intent and presents a personalised retention offer built from everything it already knows about that account — their usage pattern, recent support history, billing status, and risk score. Instead of showing everyone the same discount popup, Churnlane addresses the actual reason the customer is leaving, which gives them a genuine reason to stay.
+
+## How It Works
+
+<Steps>
+  <Step title="Customer clicks Cancel">
+    The customer initiates cancellation from your billing portal or account settings page. Churnlane detects the event in real time.
+  </Step>
+  <Step title="Churnlane identifies the likely reason">
+    Using the account's risk score, recent signals, and any open support tickets, Churnlane determines the most probable cause of cancellation intent — for example, a failed data import, low seat adoption, or a billing dispute.
+  </Step>
+  <Step title="A personalised offer is generated">
+    Churnlane drafts a targeted offer that speaks directly to the identified problem. The offer is specific: it might be a concierge onboarding call, a fix for a broken workflow, a temporary pause, or a plan adjustment that better fits their usage.
+  </Step>
+  <Step title="The customer chooses">
+    The customer sees a clear explanation of what went wrong and the proposed fix. Two actions are presented: **Keep my plan** or **Cancel at period end**. No pressure, no tricks — just a relevant offer they can accept or decline.
+  </Step>
+  <Step title="Outcome is recorded">
+    Whether the customer keeps or cancels, Churnlane logs the outcome and updates the account's health band and risk score accordingly.
+  </Step>
+</Steps>
+
+## Personalised vs. Generic Offers
+
+Generic cancel flows offer a discount to everyone. That approach has two problems: it trains customers to cancel in order to get a deal, and it does nothing for customers who aren't leaving because of price.
+
+Churnlane builds its offer around the **actual problem** the data reveals.
+
+| Scenario | Generic Offer | Churnlane Offer |
+|---|---|---|
+| Data import has been failing for 5 days | 20% off next month | Fix the import today, keep your plan as-is |
+| Only 2 of 10 seats are being used | 20% off next month | Guided team onboarding session this week |
+| Customer hit a plan limit repeatedly | 20% off next month | Upgrade to the next tier at a prorated price |
+| Customer raised 3 billing disputes | 20% off next month | Review the disputed invoices together |
+
+<Tip>
+  A customer who was stuck on a broken import and gets it fixed immediately has no reason to leave. Addressing the root cause converts better than any discount — and it doesn't train your customers to churn for a deal.
+</Tip>
+
+## Customer Experience
+
+When the cancel flow triggers, the customer sees a single focused screen — no dark patterns, no multi-step friction. The screen has three parts:
+
+1. **A plain-language explanation** of what Churnlane identified as the likely issue (e.g., *"It looks like your team's data import has been failing since Tuesday. We can fix that right now."*).
+2. **A targeted offer** — a specific action, not a vague promise (e.g., *"Our team will repair the import and confirm it's working within 2 hours."*).
+3. **Two clear buttons** — **Keep my plan** and **Cancel at period end**.
+
+The customer is never forced to navigate away, call support, or fill out a form. The resolution is presented at the moment of highest intent to churn, when it has the most impact.
+
+## Setting It Up
+
+Configuration lives in **Dashboard → Cancel Flow Settings**. No code is required for the standard setup — Churnlane embeds the cancel flow through the billing integration you've already connected.
+
+If you manage a custom cancel page inside your own application, you can embed the cancel flow using the JavaScript snippet provided in Settings. The snippet accepts a customer identifier and renders the offer inline.
+
+<Note>
+  The Cancel Flow Agent requires an active billing integration (Stripe or Chargebee). Without it, Churnlane cannot detect the cancellation event or pull the billing context needed to generate a personalised offer.
+</Note>
+
+You can also configure:
+
+- **Offer templates** — pre-approved offers your team wants to make available (e.g., a pause option, a downgrade path, a dedicated onboarding call).
+- **Exclusions** — account segments or plan types where you'd prefer no retention offer is shown.
+- **Approval mode** — have offers go out automatically, or route them through a CS manager before display.
+
+## Tracking Outcomes
+
+Every keep and every cancel is tracked in the **Cancel Flow** report under Analytics. Accounts that accept an offer and remain active are counted as **kept plans**. Their MRR contributes to the **Kept MRR (90 days)** metric on the portfolio dashboard.
+
+<Note>
+  Kept plans and recovered invoices are tracked in separate buckets. An account that accepted a cancel flow offer and also had a failed invoice recovered is counted once in each category — nothing is double-counted in your revenue metrics.
+</Note>

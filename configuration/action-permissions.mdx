@@ -1,0 +1,97 @@
+---
+title: "Action Permissions: Set Limits on Automated Interventions"
+sidebarTitle: "Action Permissions"
+description: "Set caps on how far Churnlane's automated actions can go — maximum discount percentage, credit limits, and other guardrails for autonomous interventions."
+---
+
+Enabling autonomous actions doesn't mean giving Churnlane a blank check. Action permissions let you define hard ceilings on what any automated intervention can do — the highest discount it can offer, the largest credit it can apply, and which customers are eligible for a free month. Churnlane will never exceed these limits, no matter what the churn score says.
+
+<Note>
+  Action permissions are a **Scale plan** feature. On Starter and Growth, Churnlane applies sensible built-in defaults and relies on approval rules to catch edge cases. Upgrade to Scale to configure fine-grained permission controls.
+</Note>
+
+## Available Permission Controls
+
+Scale workspaces can configure the following limits independently for each action type.
+
+### Maximum Discount Percentage
+
+Set the highest percentage discount Churnlane is allowed to offer in a single automated intervention. For example, setting a cap of **20%** means the system will never autonomously offer a 30% discount, even if it calculates that a larger discount would reduce churn risk more effectively.
+
+- **Applies to:** Autonomous and approval-reviewed discount actions
+- **Range:** 1% – 100%
+- **Recommended starting point:** 15–20% for most SaaS pricing models
+
+### Maximum Credit Amount
+
+Define the largest monetary credit (in your billing currency) Churnlane can apply to a customer account automatically. This prevents large-value credits from going out without a human review.
+
+- **Applies to:** Autonomous credit actions
+- **Range:** Any positive value in your account's billing currency
+- **Recommended starting point:** Set to roughly one month of your median plan price
+
+### Maximum Plan Change Tier
+
+Control how far Churnlane can move a customer across your plan tiers. You can restrict automated plan changes to one tier down (e.g., Growth → Starter) and prevent the system from moving customers to significantly lower or higher tiers without approval.
+
+- **Applies to:** Autonomous plan change actions
+- **Options:** One tier, two tiers, or any tier (upgrade and downgrade separately configurable)
+
+### Free Month Eligibility Criteria
+
+Rather than a numeric cap, free month permissions work as eligibility rules. You define the minimum conditions a customer must meet for Churnlane to autonomously grant a free billing period:
+
+- Minimum MRR threshold
+- Minimum account age (e.g., customers who have been with you for at least 90 days)
+- Maximum number of free months already granted in the past 12 months
+
+Customers who don't meet the eligibility criteria will have the free month action routed to the approval queue instead, regardless of the autonomous mode setting for that action type.
+
+## Configuring Permissions
+
+<Steps>
+  <Step title="Open the Permissions Panel">
+    Go to **Settings → Automation → Permissions** in your Churnlane dashboard. You'll see a section for each action type that supports a configurable limit.
+  </Step>
+  <Step title="Set Your Limits">
+    Enter the cap values for each control. Each field shows the current value and the allowed range.
+  </Step>
+  <Step title="Save Changes">
+    Click **Save Permissions**. Changes take effect for all future autonomous actions. Actions already in the approval queue are not affected.
+  </Step>
+</Steps>
+
+<Tip>
+  Set your permission limits before enabling autonomous mode for discounts or credits. It takes 30 seconds and ensures that even in the best-case scenario, the ceiling is exactly where you want it.
+</Tip>
+
+## How Permissions Interact with Approval Rules
+
+Action permissions and approval rules form a two-layer model. Both layers must be satisfied before an autonomous action executes.
+
+**Layer 1 — Approval Rules:** Is this action type set to Autonomous mode? If yes, proceed to Layer 2. If no, route to the approval queue.
+
+**Layer 2 — Action Permissions:** Does the proposed action stay within the configured limits? If yes, execute autonomously. If no, route to the approval queue with a note explaining which limit was exceeded.
+
+This means a permission breach doesn't silently drop the action — it escalates it for human review. You'll see the proposed action in your queue with a flag indicating it exceeded the permission ceiling, so you can approve a larger intervention manually if the situation warrants it.
+
+```
+Churn risk detected
+        │
+        ▼
+ Approval Rule: Autonomous?
+   ├── No  → Route to approval queue
+   └── Yes → Check Action Permissions
+               ├── Within limits → Execute autonomously
+               └── Exceeds limits → Route to approval queue (flagged)
+```
+
+## Audit Trail
+
+Every action Churnlane takes — whether executed autonomously, approved manually, or escalated due to a permission breach — is recorded in the audit log with a full record of what happened and why.
+
+For autonomous actions, the log records the permission values that were in effect at the time the action ran, so you can verify after the fact that limits were respected. For escalated actions, the log records which limit was exceeded and what the proposed value was.
+
+<Note>
+  Audit logs are also a Scale plan feature. See [Audit Logs](/account/audit-logs) for details on viewing, filtering, and exporting your action history.
+</Note>

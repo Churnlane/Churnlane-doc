@@ -1,0 +1,89 @@
+---
+title: "AI Support Reply Drafts with Full Customer Context"
+sidebarTitle: "Support Drafts"
+description: "Churnlane drafts support replies that already include the customer's plan, risk score, open tickets, and recent activity — so every response is informed."
+---
+
+When a support ticket comes in, your agent shouldn't have to open three tabs to figure out who the customer is, what plan they're on, and whether something in the product might explain their problem. Churnlane does that lookup for you and drafts a reply that already has everything in it — plan details, risk score, ticket history, and the most relevant product context — so the only thing left for your agent to do is review it and hit send.
+
+## What Each Draft Includes
+
+Every draft Churnlane generates is pre-loaded with four categories of customer context pulled at the time the ticket arrives.
+
+<CardGroup cols={2}>
+  <Card title="Plan and MRR" icon="credit-card">
+    The customer's current plan name, billing cycle, and MRR — so your agent knows the account's commercial weight before typing a single word.
+  </Card>
+  <Card title="Risk Score" icon="gauge">
+    The account's current churn risk score and health band (Healthy, Watch, At Risk, or Critical). High-risk accounts are flagged so agents can prioritise tone and escalation appropriately.
+  </Card>
+  <Card title="Ticket History" icon="clock-rotate-left">
+    A summary of previous open and recent closed tickets, including topics and resolution status. Agents see repeated issues immediately and avoid asking customers to re-explain something they've already reported.
+  </Card>
+  <Card title="Recent Product Activity" icon="chart-line">
+    Key product events from the past 14 days — features used, logins, seat activity, and any errors or anomalies Churnlane detected. This is what makes the draft accurate, not just polite.
+  </Card>
+</CardGroup>
+
+## How It Works
+
+<Steps>
+  <Step title="Ticket arrives in your helpdesk">
+    A customer submits a support request through your connected helpdesk (for example, Intercom). Churnlane receives the ticket event in real time.
+  </Step>
+  <Step title="Churnlane pulls the customer context">
+    Using the customer's identifier from the ticket, Churnlane fetches their current risk score, plan details, ticket history, and recent product activity from its data layer.
+  </Step>
+  <Step title="A draft reply is generated">
+    Churnlane drafts a reply that addresses the customer's question using the context it has gathered. The draft is tailored to the specific issue — it doesn't insert generic filler text or placeholder instructions.
+  </Step>
+  <Step title="Your agent reviews the draft">
+    The draft appears in a panel alongside the ticket in your helpdesk. Your agent reads it, edits if needed, and sends from within the helpdesk interface they already use. Nothing goes to the customer without a human review.
+  </Step>
+</Steps>
+
+## Integration Requirements
+
+Support Drafts connects to your helpdesk to receive tickets and return drafts. Currently supported helpdesks:
+
+- **Intercom** — full two-way integration; drafts appear in the Intercom composer.
+- **Zendesk** — drafts appear as internal notes on the ticket for agent review.
+- **Front** — drafts are surfaced as a suggested reply in the Front conversation view.
+
+<Note>
+  Support Drafts is available on the **Growth** and **Scale** plans. If you're on the Starter plan and want to trial this feature, contact your account manager.
+</Note>
+
+Connect your helpdesk in **Dashboard → Integrations → Helpdesk**. Once connected, Churnlane begins generating drafts for all new inbound tickets automatically. Existing open tickets are not back-filled.
+
+## Accuracy
+
+Churnlane drafts replies from real product data, not from a static knowledge base. This distinction matters when a customer's problem is caused by something that happened in their specific account.
+
+For example: if your SSO provider rotated a certificate and the customer's login is broken as a result, Churnlane already knows about the certificate rotation event (pulled from your integration logs) and drafts a reply that explains the cause and the fix — not a generic "please try clearing your cache" response.
+
+Other examples of context-aware accuracy:
+
+- A customer asking why their export failed gets a draft that references the specific export job that errored, when it happened, and what the error was.
+- A customer asking about a missing seat sees a draft that includes when the seat was last active and whether it was deprovisioned.
+- A customer querying an invoice gets a draft that lists the exact line items Churnlane pulled from the billing integration.
+
+<Tip>
+  The more integrations you connect (billing, product analytics, identity provider), the more accurate Churnlane's drafts become. A fully connected account produces drafts that typically require only minor edits before sending.
+</Tip>
+
+## Approving and Sending
+
+Churnlane drafts are always a starting point, never an automatic send. Your agent is always the last step before anything reaches the customer.
+
+From within your helpdesk:
+
+1. Open the ticket as normal.
+2. Find the **Churnlane Draft** panel (location varies by helpdesk — see the integration guide for your specific tool).
+3. Read the draft and the supporting context summary displayed alongside it.
+4. Edit the draft directly if you want to adjust the tone, add a personal note, or correct anything.
+5. Send from your helpdesk as you normally would.
+
+<Warning>
+  Do not copy drafts into external tools or email clients to send them. Always send from within your connected helpdesk so that the send event is recorded, the ticket status updates correctly, and the outcome is reflected in Churnlane's engagement history for that account.
+</Warning>

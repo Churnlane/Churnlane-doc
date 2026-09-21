@@ -1,0 +1,83 @@
+---
+title: "Email Digests and Alert Notifications in Churnlane"
+sidebarTitle: "Notifications"
+description: "Configure Churnlane email digests and alert notifications to stay on top of at-risk accounts, pending approvals, and recovery outcomes."
+---
+
+Churnlane surfaces the right information at the right time so your team doesn't have to stay logged in to stay informed. You can receive regular digests that summarize what's happening across your at-risk accounts, immediate alerts when an action is waiting in your approval queue, and outcome notifications when payment recovery attempts succeed or fail. Every notification type is independently configurable.
+
+## Email Digests
+
+Email digests give your team a regular summary of what Churnlane sees and what it's done on your behalf. Each digest includes:
+
+- **At-risk accounts** — customers whose churn score has crossed your alert threshold since the last digest, ranked by MRR impact
+- **Recent actions taken** — a summary of interventions that were executed (autonomously or after approval) in the digest period
+- **Revenue saved** — an estimate of retained MRR from successful interventions
+
+Digests are delivered to one or more email addresses you specify. You can send them to an individual, a team inbox, or a Slack-connected email address.
+
+### Configuring Digests
+
+<Steps>
+  <Step title="Open Notification Settings">
+    Go to **Settings → Notifications** in your Churnlane dashboard.
+  </Step>
+  <Step title="Set Digest Frequency">
+    Choose **Daily** (sent each morning) or **Weekly** (sent Monday morning). Daily digests are recommended during your first few weeks while you're learning your churn patterns.
+  </Step>
+  <Step title="Add Recipients">
+    Enter one or more email addresses to receive the digest. There's no limit on recipients.
+  </Step>
+  <Step title="Save">
+    Click **Save Notification Preferences**. You'll receive a confirmation digest within a few minutes so you can verify delivery.
+  </Step>
+</Steps>
+
+## Pending Approval Alerts
+
+When an action is waiting in your approval queue, Churnlane can send an immediate email alert rather than waiting for your next digest. This is especially useful for high-risk accounts where a fast response could make the difference.
+
+You can configure a **risk score threshold** for approval alerts. For example, setting the threshold to **70** means you'll only receive an immediate alert when the at-risk customer has a churn score above 70. Lower-risk queued items will still appear in your digest, but won't trigger an instant notification.
+
+### Configuring Approval Alerts
+
+In **Settings → Notifications**, find the **Pending Approval Alerts** section and:
+
+1. Toggle the alert on or off
+2. Set your risk score threshold (0–100; default is 70)
+3. Confirm the recipient list (can differ from your digest recipients)
+
+<Tip>
+  If you've enabled autonomous mode for most action types, approval alerts become more important — the items that do land in your queue are the edge cases that exceeded your permission limits or fell outside normal patterns. Set your threshold low (50–60) so you catch these quickly.
+</Tip>
+
+## Payment Recovery Alerts
+
+When Churnlane's payment recovery flow attempts to recover a failed charge, it can notify you of the outcome. You can receive alerts for:
+
+- **Recovery success** — a previously failed payment was successfully retried
+- **Recovery failure** — all retry attempts were exhausted without a successful charge
+
+For recovery failure alerts, you can configure **N** (the number of retry attempts) after which the failure notification triggers. The default is to notify after the final retry attempt in the sequence.
+
+### Configuring Payment Recovery Alerts
+
+In **Settings → Notifications**, find the **Payment Recovery Alerts** section and:
+
+1. Toggle success and failure alerts independently
+2. For failure alerts, set the retry threshold before notification (e.g., notify after 3 failed attempts)
+3. Confirm the recipient list
+
+<Note>
+  Payment recovery is a **Growth** and **Scale** plan feature. On Starter, payment recovery alerts are not available.
+</Note>
+
+## Managing Notification Preferences
+
+All notification settings live in one place: **Settings → Notifications**. You can update your preferences at any time — changes take effect immediately and don't require re-authentication or a support request.
+
+Each team member with access to your Churnlane workspace can have independent notification preferences. To update preferences for another team member, they'll need to log in and configure their own settings, or an admin can update them via the team management panel at **Settings → Team**.
+
+<Note>
+  Notification emails are sent from **noreply@churnlane.com**. Add this address to your email allowlist (and ask your team to do the same) to ensure digests and alerts don't land in spam. If you use a third-party spam filter or a corporate email gateway, you may need to whitelist the full `churnlane.com` sending domain.
+</Note>

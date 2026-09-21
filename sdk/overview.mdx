@@ -1,0 +1,72 @@
+---
+title: "Churnlane SDK: Track Product Usage for Churn Scoring"
+sidebarTitle: "Overview"
+description: "The Churnlane SDK lets you send product usage events from your app so Churnlane can score churn risk based on real customer behavior."
+---
+
+The Churnlane SDK connects your product's activity data to Churnlane's churn-risk engine. By sending events like logins, feature usage, and seat activity, you give Churnlane the behavioral signals it needs to identify accounts that are disengaging — before they cancel. The SDK works alongside your billing integration: Stripe, Paddle, or Chargebee surfaces financial risk signals automatically, but product usage signals require the SDK.
+
+## Server vs. Browser
+
+The `@churnlane/sdk` package ships two entry points designed for different environments.
+
+**Server entry point — `@churnlane/sdk/server`**
+
+Use this in your backend, API routes, or serverless functions. It authenticates with your **secret key**, which must never leave your server. This entry point supports both `identify()` and `track()` calls and is the recommended way to send data to Churnlane.
+
+```typescript
+import { ChurnlaneClient } from '@churnlane/sdk/server';
+
+const churnlane = new ChurnlaneClient({
+  secretKey: process.env.CHURNLANE_SECRET_KEY,
+});
+```
+
+**Browser entry point — `@churnlane/sdk/browser`**
+
+Use this in client-side code when you need to fire events directly from the browser. It authenticates with your **publishable key**, which is safe to expose in front-end code. The browser entry point supports `track()` for in-browser events but does not support `identify()` — account trait updates should always come from the server.
+
+<Note>
+  Never use your secret key in browser code, client-side bundles, or any environment where it could be read by end users. If you're unsure, use the server entry point from your backend.
+</Note>
+
+## What to Track
+
+Focus on events that reflect whether a customer is actively getting value from your product. The following events are the most signal-rich for churn scoring:
+
+| Event Name | When to Fire | Why It Matters |
+|---|---|---|
+| `user_login` | A user successfully authenticates | Measures whether the account is still actively logging in |
+| `feature_used` | A user interacts with a core feature | Tracks depth of engagement beyond simple logins |
+| `seat_active` | A licensed seat completes a meaningful action | Reveals how many seats on an account are actually engaged |
+| `onboarding_step_completed` | A user completes a step in your onboarding flow | Early disengagement from onboarding is a leading churn indicator |
+| `settings_changed` | A user updates account or workspace settings | Signals active investment in the product |
+
+You don't need to track every event in your application — start with `user_login` and `feature_used`, then add more events as you tune your scoring.
+
+## How It Powers Scoring
+
+Churnlane scores each account against its **own historical baseline**, not against industry averages or other customers on your platform. When you send events via the SDK, Churnlane builds a rolling behavioral profile for each account: how often users log in, which features they use, how many seats are active, and how those patterns change over time.
+
+When this week's activity drops significantly below that account's normal pattern — for example, logins fall to half their usual rate, or a previously active feature goes unused — Churnlane raises the risk score for that account. Because the comparison is always account-to-account, a low-volume account that's consistent won't be penalized just for being small.
+
+The more event history you send, the more accurate the scoring becomes. New accounts typically need two to four weeks of event data before their baselines stabilize.
+
+<Tip>
+  If your app doesn't use a build step or you want to add tracking to a legacy codebase quickly, you can embed Churnlane with a single `<script>` tag instead of installing the npm package. See the Script Tag page for details.
+</Tip>
+
+<CardGroup cols={2}>
+  <Card title="Installation" icon="box" href="/sdk/installation">
+    Install the SDK, initialize the client, and verify your connection with a test identify call.
+  </Card>
+  <Card title="Tracking Events" icon="chart-line" href="/sdk/tracking-events">
+    Learn how to use identify() and track() to send product usage data from your server.
+  </Card>
+  <Card title="Script Tag" icon="code" href="/sdk/script-tag">
+    Embed Churnlane without a build step using a single script tag and your publishable key.
+  </Card>
+  <Card title="API Keys" icon="key" href="/sdk/installation">
+    Find your secret and publishable keys in Settings → API Keys.
+  </Card>
+</CardGroup>

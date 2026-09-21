@@ -1,0 +1,111 @@
+---
+title: "Churn Risk Scoring: Spot At-Risk Customers Hourly"
+sidebarTitle: "Churn Scoring"
+description: "Churnlane scores every customer hourly against their own history, flags accounts slipping from normal, and explains why in plain English."
+---
+
+Churnlane assigns every account a churn risk score that refreshes every hour. Unlike tools that compare your customers to an industry average, Churnlane measures each account against its own historical behaviour — so a power user who logs in twice a week looks very different from a light user who logs in twice a month, even if both show the same absolute activity level. When something slips from that account's normal, the score moves and you get an explanation.
+
+## How Scores Work
+
+Scores run from **0 to 100**. Higher means higher risk. Every hour, Churnlane re-runs the full scoring model for every account in your portfolio using that account's own baseline as the reference point.
+
+| Principle | Detail |
+|---|---|
+| **Range** | 0 (no signal) → 100 (critical risk) |
+| **Frequency** | Re-scored every hour |
+| **Baseline** | Each account compared to its own historical normal |
+| **Threshold** | Scores above 70 need your attention |
+
+Because scores are account-relative, a new customer ramping up usage and a mature customer whose usage suddenly drops are evaluated on completely different baselines. The model adapts as an account's normal evolves over time.
+
+## Reading Your Score
+
+Use the bands below to prioritise your workload. A score doesn't mean a customer will churn — it means something has shifted enough to deserve a closer look.
+
+| Band | Score | What It Means |
+|---|---|---|
+| **Low** | 0 – 30 | Account is behaving within its normal range. No action required. |
+| **Moderate** | 31 – 70 | Some signals have moved. Worth a check-in but not urgent. |
+| **High** | 71 – 100 | One or more signals have shifted significantly. **Act now.** |
+
+<Note>
+  Anything over 70 needs you. Churnlane surfaces these accounts at the top of your portfolio view and can trigger automated playbooks or alerts the moment a score crosses the threshold.
+</Note>
+
+## Plain-English Explanations
+
+Every score comes with a one-sentence explanation written in plain English — no model jargon, no raw feature weights. Below the headline sentence, Churnlane lists the ranked evidence that contributed to the score, each with a percentage share of the overall signal.
+
+**Example explanation**
+
+> *"This account's login frequency dropped 60% over the past 14 days while support tickets increased."*
+
+**Example evidence list**
+
+| Signal | Contribution |
+|---|---|
+| Login frequency (–60% vs. baseline) | 44% |
+| Support ticket volume (+3 open tickets) | 31% |
+| Feature usage — data export (0 events, 21-day gap) | 15% |
+| Seat activity (2 of 8 seats active this week) | 10% |
+
+The explanation and evidence update every time the score is recalculated. You always know not just the number, but the reason behind it.
+
+## Portfolio Health
+
+Churnlane groups every account in your portfolio into one of four health bands. These bands appear in the main dashboard and in segment filters so you can slice your book of business quickly.
+
+<CardGroup cols={2}>
+  <Card title="Healthy" icon="circle-check">
+    Score 0 – 30. Account is stable. Usage, billing, and engagement are all within normal range.
+  </Card>
+  <Card title="Watch" icon="eye">
+    Score 31 – 50. Mild movement in one or more signals. Schedule a proactive touch when capacity allows.
+  </Card>
+  <Card title="At Risk" icon="triangle-exclamation">
+    Score 51 – 70. Multiple signals have shifted. Prioritise outreach this week.
+  </Card>
+  <Card title="Critical" icon="circle-xmark">
+    Score 71 – 100. Significant deterioration across signals. Act today — assign an owner and open a play.
+  </Card>
+</CardGroup>
+
+## Dashboard Metrics
+
+The portfolio dashboard shows four headline metrics at all times. These numbers update as scores change and as billing events come in.
+
+| Metric | What It Shows |
+|---|---|
+| **Tracked MRR** | Total monthly recurring revenue across all scored accounts. |
+| **At-Risk MRR** | Combined MRR of every account currently in the At Risk or Critical band. |
+| **Kept MRR (90 days)** | MRR retained from accounts that were At Risk or Critical and did not churn in the past 90 days. |
+| **Invoices Recovered** | Count and value of failed invoices that were successfully collected through payment recovery. |
+
+<Tip>
+  Use **At-Risk MRR** in your weekly CS standup to size the revenue exposure before it becomes a pipeline problem. When Kept MRR trends up, your retention plays are working.
+</Tip>
+
+## Signals Used
+
+Churnlane draws on five categories of signals when calculating each score. Every signal is evaluated relative to that account's own history.
+
+<Accordion title="Login Frequency">
+  How often users in the account authenticate, measured per seat and in aggregate. A sustained drop — especially across multiple seats — is one of the strongest leading indicators of churn.
+</Accordion>
+
+<Accordion title="Seat Activity">
+  The proportion of provisioned seats that have generated any product event in the current period. Low seat utilisation often predicts a renewal conversation where the buyer questions the per-seat price.
+</Accordion>
+
+<Accordion title="Feature Usage">
+  Which features have been used, how recently, and how often. Churnlane tracks both breadth (how many features) and depth (how frequently). A sudden gap in a previously active workflow is a strong signal.
+</Accordion>
+
+<Accordion title="Support Sentiment">
+  The volume and tone of open and recent support tickets. High ticket volume combined with negative sentiment shifts the score upward even when product usage looks healthy.
+</Accordion>
+
+<Accordion title="Billing Events">
+  Failed payments, dunning states, downgrade requests, and invoice disputes. Billing friction is a direct signal and is weighted accordingly in the model.
+</Accordion>

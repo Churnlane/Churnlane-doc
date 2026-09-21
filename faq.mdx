@@ -1,0 +1,80 @@
+---
+title: "Frequently Asked Questions About Churnlane"
+sidebarTitle: "FAQ"
+description: "Answers to common questions about Churnlane setup, data sources, timing, and privacy, directly from the founders."
+---
+
+These are the questions that come up most often from teams in the Churnlane beta. We've answered them directly rather than routing them through a support flow, because they deserve straight answers. If something here doesn't answer your question, there's a note at the bottom on how to reach us.
+
+<AccordionGroup>
+  <Accordion title="How long before it tells me something useful?">
+    It depends on the signal type. Connect Stripe (or Paddle or Chargebee) and billing risk signals — failed cards, plan downgrades, billing threshold crossings — are available the **same day**. There's no lag because the data is already historical.
+
+    Usage signals take a little longer. Churnlane builds its behavioral baselines by comparing week-on-week activity, which means you need about **a week of data** before usage-based churn scores become reliable. During that window, the dashboard shows you what it knows (billing signals) and tells you what it's still learning (usage baselines), rather than showing you a number it can't stand behind.
+
+    After the first week, scores update daily and reflect the full picture.
+  </Accordion>
+
+  <Accordion title="Will it email my customers without asking me?">
+    No. By default, **everything waits in your approval queue**. Churnlane will propose an action and explain its reasoning, but it will not send anything to a customer until you approve it.
+
+    Autonomous mode — where Churnlane executes actions without per-action approval — exists and works well, but you turn it on deliberately, one action type at a time. Even then, you can set hard limits on what autonomous actions are allowed to do: the maximum discount percentage, the largest credit, which customers are eligible for a free month. The system will never exceed those limits, and anything that would exceed them routes back to the approval queue.
+
+    The default answer to "will it do something I didn't intend?" is no.
+  </Accordion>
+
+  <Accordion title="Where does it get the data?">
+    From the tools you connect — Churnlane doesn't use third-party data, scraped data, or anything you haven't explicitly plugged in.
+
+    Specifically:
+
+    - **Billing signals** come from Stripe, Paddle, or Chargebee, depending on which you connect
+    - **Product and support signals** come from Intercom, PostHog, or HubSpot if you connect them
+    - **Direct usage events** come from the Churnlane SDK, which you instrument in your product to send the events that matter to your churn model
+
+    If you haven't connected a source, Churnlane doesn't have access to it. You can see every connected data source at any time in **Settings → Integrations**.
+  </Accordion>
+
+  <Accordion title="What about customers who leave anyway?">
+    Churnlane tracks churned and retained customers separately, and it's careful about attribution. Revenue that churns despite an intervention is logged as lost — it isn't counted as saved. Nothing is claimed twice.
+
+    In your dashboard, you'll see a week-by-week breakdown of:
+
+    - **Retained MRR** — customers who were flagged as at-risk and stayed
+    - **Lost MRR** — customers who churned, regardless of whether an intervention was attempted
+    - **Uncontested churn** — customers who left without a churn score crossing the intervention threshold (useful for calibrating your alert sensitivity)
+
+    This means the revenue numbers Churnlane shows you are conservative by design. If you see $4,200 in retained MRR this week, that's real retention you can attribute to an intervention — not a vanity metric.
+  </Accordion>
+
+  <Accordion title="Is my data secure?">
+    Yes. A few specifics worth knowing:
+
+    - Your **secret API key** is used only server-side in your own infrastructure. It never reaches the browser and is never transmitted to Churnlane's servers.
+    - Churnlane **does not use cookies** on your customers' sessions and does not attach any tracking scripts to your product's frontend.
+    - Churnlane **does not record sessions**, capture keystrokes, or read form inputs.
+    - Data in transit is encrypted with TLS. Data at rest is encrypted in Churnlane's infrastructure.
+
+    If you're on Scale, your workspace runs in a **dedicated environment** — your data is not co-mingled with other tenants at the infrastructure level.
+
+    If you have specific security or compliance requirements (SOC 2, GDPR data processing agreements, etc.), contact support@churnlane.com and we'll provide the relevant documentation.
+  </Accordion>
+
+  <Accordion title="Can I use Churnlane with multiple products or workspaces?">
+    Each Churnlane workspace tracks one product. The workspace is scoped to a single set of integrations, a single customer list, and a single set of automation rules — this keeps the churn model clean and avoids the signal mixing that happens when multiple products share a workspace.
+
+    If you run multiple products and want to track them separately, you'll need a workspace per product. Contact **support@churnlane.com** to discuss multi-product setups — the team can walk you through the options and how billing works across workspaces.
+  </Accordion>
+
+  <Accordion title="What happens if I exceed my plan's customer limit?">
+    Churnlane will send you an alert when you're approaching your tracked customer limit — typically at 80% and again at 95% of your plan's ceiling. You'll have time to upgrade before hitting the limit.
+
+    If you do exceed the limit, **Churnlane won't drop any data mid-month**. Your existing tracking continues uninterrupted. New customers above the limit won't receive churn scores until you upgrade, but nothing already in the system is lost or degraded.
+
+    Upgrade at any time from **Settings → Billing**, or contact support@churnlane.com if you'd like to discuss which plan makes sense for your current growth trajectory.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+Have another question? Reply to your waitlist confirmation email and a founder will answer.

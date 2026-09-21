@@ -1,0 +1,43 @@
+---
+title: "Connect Paddle to Churnlane for Subscription Insights"
+sidebarTitle: "Paddle"
+description: "Link Paddle to Churnlane using your Paddle API key to import subscription and billing data for churn risk scoring."
+---
+
+If Paddle is your billing provider, you can connect it to Churnlane by supplying your Paddle API key. Once connected, Churnlane imports subscription lifecycle events and payment data from Paddle and uses them to calculate churn risk scores for each of your customers. The setup takes less than five minutes and requires no code changes to your application.
+
+## Connect Paddle
+
+<Steps>
+  <Step title="Find your Paddle API key">
+    Log in to your Paddle Dashboard and go to **Developer Tools > Authentication**. Under the **API keys** section, copy your secret API key. If you do not have one yet, click **Generate API key** and copy the value before closing the dialog — Paddle only shows it once.
+  </Step>
+  <Step title="Open the Paddle integration page">
+    In the Churnlane dashboard, navigate to **Settings > Integrations > Paddle**.
+  </Step>
+  <Step title="Paste your API key and save">
+    Paste the key into the **Paddle API Key** field and click **Save**. Churnlane validates the key against the Paddle API and, if successful, marks the integration as **Connected** and begins importing your subscription data.
+  </Step>
+</Steps>
+
+<Note>
+  Churnlane only reads data from Paddle using your API key. It does not write back to Paddle, create or cancel subscriptions, or trigger any financial transactions on your behalf.
+</Note>
+
+## What Churnlane imports from Paddle
+
+After connecting, Churnlane pulls the following subscription and billing signals from Paddle:
+
+| Signal | What it means for churn risk |
+|---|---|
+| **Subscription status** | Active, paused, past-due, and cancelled states are tracked in real time. |
+| **Failed payments** | Payment failures flag customers at risk of involuntary churn. |
+| **Plan changes** | Downgrades and pauses indicate reduced commitment before cancellation. |
+| **MRR per customer** | Contraction in MRR surfaces shrinking accounts early. |
+| **Upcoming renewals** | Approaching renewal dates help prioritize outreach for at-risk accounts. |
+
+## Paddle version support
+
+<Note>
+  Churnlane supports **Paddle Billing (v2)**. If you are on the legacy Paddle Classic platform, you will need to migrate to Paddle Billing before connecting. See [Paddle's migration guide](https://developer.paddle.com/migrate/overview) for details.
+</Note>

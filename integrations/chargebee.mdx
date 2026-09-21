@@ -1,0 +1,41 @@
+---
+title: "Connect Chargebee to Churnlane for Subscription Data"
+sidebarTitle: "Chargebee"
+description: "Import Chargebee subscription events into Churnlane by adding your API key. Churnlane uses subscription health signals to score churn risk."
+---
+
+Connecting Chargebee to Churnlane gives the risk engine access to your full subscription lifecycle — from trial starts and activations through downgrades, payment failures, and cancellations. Setup requires your Chargebee site name and an API key from your Chargebee account. Once connected, Churnlane imports your existing subscription data and listens for new events going forward.
+
+## Connect Chargebee
+
+<Steps>
+  <Step title="Find your Chargebee API key">
+    Log in to Chargebee and go to **Settings > Configure Chargebee > API Keys**. Under **API Keys**, click **Add API Key**, choose **Read-Only Key**, give it a descriptive name such as `churnlane-readonly`, and click **Create**. Copy the key value — you will need it in the next step.
+  </Step>
+  <Step title="Open the Chargebee integration page">
+    In the Churnlane dashboard, navigate to **Settings > Integrations > Chargebee**.
+  </Step>
+  <Step title="Enter your site name and API key">
+    In the **Chargebee Site Name** field, enter the subdomain of your Chargebee account (for example, if your Chargebee URL is `acme.chargebee.com`, enter `acme`). Paste your API key into the **API Key** field and click **Save**. Churnlane verifies the credentials and, once validated, marks the integration as **Connected**.
+  </Step>
+</Steps>
+
+<Note>
+  Use a **read-only** API key for this integration. Churnlane never writes data back to Chargebee, and a read-only key limits the blast radius if the key is ever exposed.
+</Note>
+
+## What Churnlane imports from Chargebee
+
+Once connected, Churnlane continuously monitors the following signals from your Chargebee account:
+
+| Signal | What it means for churn risk |
+|---|---|
+| **Subscription status** | Tracks active, in-trial, paused, non-renewing, and cancelled states. |
+| **Failed payments** | Dunning failures and declined charges flag involuntary churn risk. |
+| **MRR per subscription** | Drops in MRR surface contraction before full cancellation. |
+| **Plan downgrades** | Moving to a lower plan is a strong precursor to churn. |
+| **Cancellation reasons** | Where available, cancellation reasons feed back into the prediction model. |
+
+<Tip>
+  Churnlane performs an initial historical import when you first connect Chargebee, which gives the risk model a head start. Same-day signals from new billing events appear in customer risk timelines within minutes of occurring in Chargebee.
+</Tip>

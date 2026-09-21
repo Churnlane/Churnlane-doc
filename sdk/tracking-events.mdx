@@ -1,0 +1,118 @@
+---
+title: "Tracking Product Events with the Churnlane SDK"
+sidebarTitle: "Tracking Events"
+description: "Send identify and track calls from your server to give Churnlane the product usage data it needs to detect early signs of churn."
+---
+
+The two core SDK methods are `identify()` and `track()`. Together they give Churnlane a complete picture of each account: who the account is, what their subscription looks like, and how actively their users are engaging with your product. The more consistently you call these methods at meaningful moments, the more accurate Churnlane's per-account baselines become — and the earlier it can flag risk.
+
+## identify()
+
+Call `identify()` to tell Churnlane about an account and its current traits. Churnlane uses trait data like `plan`, `mrr`, and `seats` to contextualize usage signals: a drop in logins matters more for a high-MRR enterprise account than for a small team on a free trial.
+
+```typescript
+import { churnlane } from './lib/churnlane';
+
+await churnlane.identify({
+  accountId: 'acct_123',
+  traits: {
+    name: 'Acme Inc.',
+    plan: 'growth',
+    mrr: 1249,
+    seats: 42,
+  },
+});
+```
+
+**When to call identify()**
+
+- When a user logs in, to ensure account traits are always current
+- When an account upgrades or downgrades its plan
+- When the seat count on an account changes
+- On application startup, as part of your session initialization
+
+<Tip>
+  Call `identify()` whenever account traits change — don't wait for a login. If a customer upgrades from a starter plan to growth, send an `identify()` immediately so Churnlane reflects the new MRR in its scoring.
+</Tip>
+
+## track()
+
+Call `track()` to log a product event for a specific user within an account. Events are the raw material of churn scoring: Churnlane aggregates them into per-account activity patterns and compares each week's pattern against that account's own history.
+
+**Tracking a feature interaction:**
+
+```typescript
+await churnlane.track({
+  accountId: 'acct_123',
+  userId: 'user_456',
+  event: 'feature_used',
+  properties: {
+    feature: 'data-export',
+  },
+});
+```
+
+**Tracking a login:**
+
+```typescript
+await churnlane.track({
+  accountId: 'acct_123',
+  userId: 'user_456',
+  event: 'user_login',
+});
+```
+
+Fire `track()` from your server wherever the corresponding action occurs — in an API route handler, a webhook processor, or a background job. Avoid firing it from the browser unless you're using the [script tag](/sdk/script-tag) approach, which uses a publishable key instead of the secret key.
+
+## Recommended Events
+
+The following events provide the highest-value signals for churn scoring. Start with the first two and add the rest incrementally.
+
+| Event Name | When to Fire | Why It Matters |
+|---|---|---|
+| `user_login` | A user successfully authenticates | Baseline engagement signal; a sustained drop in logins is one of the strongest churn predictors |
+| `feature_used` | A user interacts with a core feature of your product | Reveals depth of engagement; accounts using only one or two features are higher risk |
+| `seat_active` | A licensed seat completes a meaningful action in a given period | Identifies accounts where most seats are dormant, even if one power user stays active |
+| `onboarding_step_completed` | A user completes a step in your onboarding flow | Early disengagement during onboarding is a leading indicator of churn within the first 90 days |
+| `session_ended` | A user's session concludes (tab closed, explicit logout, timeout) | Provides session-length data that complements login frequency |
+
+## Properties Reference
+
+Every call to `track()` and `identify()` accepts the following fields:
+
+| Field | Required | Description |
+|---|---|---|
+| `accountId` | **Required** | Your internal ID for the customer's organization or workspace. Must be stable and consistent across calls. |
+| `userId` | Recommended | Your internal ID for the individual user performing the action. Required for `track()`; not applicable to `identify()`. |
+| `event` | Required (`track` only) | The name of the event. Use snake_case and keep names stable — changing event names breaks historical comparisons. |
+| `traits` | Required (`identify` only) | A plain object of account-level attributes: `name`, `plan`, `mrr`, `seats`, and any custom fields you want to associate. |
+| `properties` | Optional (`track` only) | A plain object of event-specific metadata, such as `{ feature: 'data-export' }`. |
+
+## Error Handling
+
+Wrap SDK calls in a `try/catch` block so that a Churnlane API failure never causes an unhandled exception in your application's critical path.
+
+```typescript
+import { churnlane } from './lib/churnlane';
+
+try {
+  await churnlane.track({
+    accountId: 'acct_123',
+    userId: 'user_456',
+    event: 'feature_used',
+    properties: {
+      feature: 'data-export',
+    },
+  });
+} catch (error) {
+  // Log the error to your observability platform but don't
+  // block the user's action — tracking is non-critical.
+  console.error('Churnlane track failed:', error);
+}
+```
+
+The SDK retries failed requests automatically using exponential backoff before surfacing an error to your `catch` block, so transient network issues are handled for you.
+
+<Note>
+  Rate limits apply to all inbound event calls. The specific limits depend on your plan. Contact [support@churnlane.com](mailto:support@churnlane.com) for your current limits if you expect high event volumes.
+</Note>

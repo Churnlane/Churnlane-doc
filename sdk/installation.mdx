@@ -1,0 +1,83 @@
+---
+title: "Installing the Churnlane SDK in Your Application"
+sidebarTitle: "Installation"
+description: "Install the @churnlane/sdk package with npm, yarn, or pnpm, then initialize the server client with your Churnlane secret key."
+---
+
+Getting the Churnlane SDK running in your application takes about five minutes. You'll install the package, initialize a server-side client with your secret key, and fire a test `identify` call to confirm that data is flowing. Once the connection is live, the Churnlane dashboard shows a green indicator on your account and you can start building out your event tracking.
+
+<Tip>
+  If your application doesn't use a build step — for example, a server-rendered app with inline scripts — skip this page and see the [Script Tag](/sdk/script-tag) guide instead.
+</Tip>
+
+<Steps>
+
+  <Step title="Get Your API Key">
+    Open the Churnlane dashboard and navigate to **Settings → API Keys**. Copy the value labeled **Secret Key** — it begins with `sk_`.
+
+    <Warning>
+      Your secret key grants full write access to your Churnlane workspace. Keep it on the server only. Never commit it to source control, include it in a client-side bundle, or expose it in any environment accessible to end users.
+    </Warning>
+  </Step>
+
+  <Step title="Install the Package">
+    Add `@churnlane/sdk` to your project using your preferred package manager:
+
+    <CodeGroup>
+
+    ```bash npm
+    npm install @churnlane/sdk
+    ```
+
+    ```bash yarn
+    yarn add @churnlane/sdk
+    ```
+
+    ```bash pnpm
+    pnpm add @churnlane/sdk
+    ```
+
+    </CodeGroup>
+
+    The package ships with full TypeScript types and has separate entry points for server (`@churnlane/sdk/server`) and browser (`@churnlane/sdk/browser`) environments.
+  </Step>
+
+  <Step title="Initialize the Client">
+    Import `ChurnlaneClient` from the server entry point and create an instance using your secret key. The recommended pattern is to instantiate the client once and export it as a shared module.
+
+    ```typescript
+    import { ChurnlaneClient } from '@churnlane/sdk/server';
+
+    export const churnlane = new ChurnlaneClient({
+      secretKey: process.env.CHURNLANE_SECRET_KEY,
+    });
+    ```
+
+    <Note>
+      Store your secret key in an environment variable rather than hard-coding it. Most hosting platforms (Vercel, Railway, Render, AWS, and others) provide a secrets or environment variables UI in their project settings. For local development, use a `.env` file and add it to your `.gitignore`.
+    </Note>
+  </Step>
+
+  <Step title="Verify the Connection">
+    Send a test `identify` call using a real account ID from your system. This tells Churnlane about the account's current traits and confirms that your credentials and network configuration are working correctly.
+
+    ```typescript
+    import { churnlane } from './lib/churnlane';
+
+    await churnlane.identify({
+      accountId: 'acct_123',
+      traits: {
+        name: 'Acme Inc.',
+        plan: 'growth',
+        mrr: 1249,
+        seats: 42,
+      },
+    });
+    ```
+
+    After running this code, open the Churnlane dashboard. Your workspace connection indicator in **Settings → API Keys** will turn green within a few seconds of receiving the first event. If it stays grey after 30 seconds, double-check that your secret key is correct and that outbound HTTPS traffic is not blocked in your environment.
+  </Step>
+
+</Steps>
+
+Once the connection is verified, continue to [Tracking Events](/sdk/tracking-events) to learn how to instrument `track()` calls throughout your application.

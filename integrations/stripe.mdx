@@ -1,0 +1,47 @@
+---
+title: "Connect Stripe to Churnlane for Billing Risk Signals"
+sidebarTitle: "Stripe"
+description: "Link your Stripe account to Churnlane with one OAuth click. Get same-day churn signals from failed payments, downgrades, and unpaid invoices."
+---
+
+Stripe is Churnlane's fastest integration to activate. Because Churnlane uses OAuth, there is nothing to copy, paste, or configure in code — you authorize the connection directly from your Stripe account and Churnlane begins monitoring billing events immediately. Once connected, every failed payment, downgrade, and overdue invoice your customers generate flows into Churnlane's risk engine the same day it occurs.
+
+## Connect Stripe
+
+<Steps>
+  <Step title="Open the Stripe integration page">
+    In the Churnlane dashboard, navigate to **Settings > Integrations > Stripe**.
+  </Step>
+  <Step title="Authorize with OAuth">
+    Click **Connect with Stripe**. You will be redirected to Stripe's authorization screen. Log in to the Stripe account that holds your subscription data and click **Allow access**.
+  </Step>
+  <Step title="Confirm the connection">
+    Churnlane redirects you back to the Integrations page. The Stripe tile shows a green **Connected** badge. Churnlane begins importing billing events and scoring risk immediately — no further setup is required.
+  </Step>
+</Steps>
+
+## What Churnlane imports from Stripe
+
+Once connected, Churnlane continuously pulls the following billing signals to build and update each customer's churn risk score:
+
+| Signal | What it means for churn risk |
+|---|---|
+| **Failed card charges** | Repeated payment failures are a leading indicator of involuntary churn. |
+| **Invoice status** | Overdue or voided invoices surface customers at risk of losing access. |
+| **Plan downgrades** | A move to a lower tier often precedes cancellation. |
+| **MRR changes** | Contraction MRR trends identify accounts shrinking before they churn. |
+| **Subscription cancellations** | Confirmed cancellations close the risk loop and feed model accuracy. |
+
+<Note>
+  Churnlane requests **read-only** access to your Stripe account. It cannot create charges, issue refunds, or modify any data in Stripe.
+</Note>
+
+## How quickly do signals appear?
+
+<Tip>
+  Billing risk signals from Stripe are processed **same-day**. In most cases, a failed payment or downgrade event appears in the relevant customer's risk timeline within minutes of it occurring in Stripe. There is no waiting period or warm-up phase required.
+</Tip>
+
+## No code required
+
+The Stripe integration is entirely click-based. You do not need to install a webhook, add any code to your application, or configure API keys. If you ever need to disconnect Stripe — for example, to switch to a different Stripe account — return to **Settings > Integrations > Stripe** and click **Disconnect**.

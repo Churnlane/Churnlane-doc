@@ -1,0 +1,35 @@
+---
+title: "Connect HubSpot to Align Sales and Retention Signals"
+sidebarTitle: "HubSpot"
+description: "Connect HubSpot to Churnlane to surface CRM health signals and keep your sales team aligned on at-risk accounts."
+---
+
+Your CRM holds relationship signals that no billing provider can see — whether a key contact has gone quiet, whether a deal renewal is stalled, or whether the champion who bought your product has left the company. By connecting HubSpot to Churnlane, you bring those relationship health signals into the same risk view as your billing and product data, giving your sales and customer success teams a complete picture of every at-risk account.
+
+## Connect HubSpot
+
+<Steps>
+  <Step title="Open the HubSpot integration page">
+    In the Churnlane dashboard, navigate to **Settings > Integrations > HubSpot**.
+  </Step>
+  <Step title="Authorize the connection">
+    Click **Connect with HubSpot**. You will be redirected to HubSpot's OAuth authorization screen. Select the HubSpot account you want to connect and click **Connect app**. Churnlane redirects you back to the Integrations page, where the HubSpot tile will show a green **Connected** badge.
+  </Step>
+</Steps>
+
+## What HubSpot adds to churn risk scores
+
+Once connected, Churnlane reads CRM data from HubSpot and uses the following signals to enrich each customer's risk profile:
+
+| Signal | How it enriches churn risk |
+|---|---|
+| **Deal health** | Stalled or at-risk renewal deals surface accounts that need immediate attention. |
+| **Contact engagement** | Declining email opens, meeting activity, and last contact date signal disengagement. |
+| **CRM activity recency** | Accounts with no recent CRM activity are often being quietly abandoned. |
+| **Champion and decision-maker changes** | Contact role changes that indicate a key buyer has left are flagged as a risk event. |
+
+## How Churnlane uses HubSpot data
+
+<Note>
+  HubSpot data enriches Churnlane's risk scores but works best in combination with a billing integration. Billing signals (from Stripe, Paddle, or Chargebee) form the core of each customer's risk score. HubSpot layered on top adds relationship context that helps your team understand *why* an account is at risk and *who* to reach out to — not just whether a risk exists. If a customer's billing data looks stable but their CRM engagement has collapsed, Churnlane will surface that discrepancy in their risk timeline.
+</Note>
