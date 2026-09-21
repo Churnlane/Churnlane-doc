@@ -40,7 +40,7 @@ Focus on events that reflect whether a customer is actively getting value from y
 | `feature_used` | A user interacts with a core feature | Tracks depth of engagement beyond simple logins |
 | `seat_active` | A licensed seat completes a meaningful action | Reveals how many seats on an account are actually engaged |
 | `onboarding_step_completed` | A user completes a step in your onboarding flow | Early disengagement from onboarding is a leading churn indicator |
-| `settings_changed` | A user updates account or workspace settings | Signals active investment in the product |
+| `session_ended` | A user's session concludes (tab closed, explicit logout, timeout) | Provides session-length data that complements login frequency |
 
 You don't need to track every event in your application — start with `user_login` and `feature_used`, then add more events as you tune your scoring.
 

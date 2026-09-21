@@ -1,7 +1,7 @@
 ---
-title: "Get Started with Churnlane in Under 15 Minutes"
+title: "Churnlane Quick Start: Live Risk Scores in 15 Minutes"
 sidebarTitle: "Quick Start"
-description: "Connect your billing provider, install the Churnlane SDK, and start seeing churn risk scores for your customers in minutes."
+description: "Connect your billing provider, install the Churnlane SDK, and get live churn risk scores for every active customer in under 15 minutes."
 ---
 
 This guide walks you through everything you need to go from a blank Churnlane workspace to live risk scores on your customer base. By the end you'll have billing signals flowing in, product events tracked, and your dashboard populated with the accounts that need your attention most.
@@ -41,11 +41,7 @@ This guide walks you through everything you need to go from a blank Churnlane wo
     If your app has no build step, you can load Churnlane via a script tag instead. Add the following to your HTML just before the closing `</body>` tag:
 
     ```html Script tag
-    <script
-      src="https://cdn.churnlane.com/sdk/v1/churnlane.min.js"
-      data-key="YOUR_PUBLIC_KEY"
-      defer
-    ></script>
+    <script src="https://cdn.churnlane.com/sdk.js" data-key="YOUR_PUBLISHABLE_KEY"></script>
     ```
 
     The script tag embed supports the same `track` and `identify` calls as the npm package. See [SDK Reference](/sdk/overview) for the full API.
@@ -55,9 +51,9 @@ This guide walks you through everything you need to go from a blank Churnlane wo
     Create a single shared Churnlane client using the secret key from **Settings → API Keys**. Initialise it in a module that runs on your server — never in browser-side code.
 
     ```typescript server.ts
-    import { Churnlane } from "@churnlane/sdk";
+    import { ChurnlaneClient } from "@churnlane/sdk/server";
 
-    export const churnlane = new Churnlane({
+    export const churnlane = new ChurnlaneClient({
       secretKey: process.env.CHURNLANE_SECRET_KEY, // set in your environment, never hard-coded
     });
     ```
@@ -65,13 +61,6 @@ This guide walks you through everything you need to go from a blank Churnlane wo
     <Warning>
       Your secret key has write access to your workspace. Never expose it in client-side JavaScript, commit it to source control, or include it in a public bundle. Use an environment variable and load it at runtime.
     </Warning>
-
-    You can verify the connection is working by calling `churnlane.ping()` during your app startup and checking the response in your logs.
-
-    ```typescript verify-connection.ts
-    const status = await churnlane.ping();
-    console.log(status); // { ok: true, workspace: "your-workspace-name" }
-    ```
   </Step>
 
   <Step title="Track Product Events">
@@ -82,26 +71,26 @@ This guide walks you through everything you need to go from a blank Churnlane wo
     ```typescript track-event.ts
     // Call this after your own authentication check, on the server.
     await churnlane.track({
-      customerId: user.stripeCustomerId, // must match the ID in your billing provider
+      accountId: user.stripeCustomerId, // must match the ID in your billing provider
+      userId: user.id,
       event: "login",
       properties: {
         method: "email",
         sessionId: session.id,
       },
-      timestamp: new Date(), // optional; defaults to now
     });
     ```
 
-    You can also call `churnlane.identify()` to keep customer metadata — name, plan, company — in sync with your billing data:
+    You can also call `churnlane.identify()` to keep customer metadata — name, plan, MRR, seats — in sync with your billing data:
 
     ```typescript identify-customer.ts
     await churnlane.identify({
-      customerId: user.stripeCustomerId,
+      accountId: user.stripeCustomerId,
       traits: {
-        name: user.name,
-        email: user.email,
+        name: user.companyName,
         plan: subscription.plan,
-        company: user.companyName,
+        mrr: subscription.mrr,
+        seats: subscription.seats,
       },
     });
     ```

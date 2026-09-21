@@ -47,8 +47,6 @@ Every draft Churnlane generates is pre-loaded with four categories of customer c
 Support Drafts connects to your helpdesk to receive tickets and return drafts. Currently supported helpdesks:
 
 - **Intercom** — full two-way integration; drafts appear in the Intercom composer.
-- **Zendesk** — drafts appear as internal notes on the ticket for agent review.
-- **Front** — drafts are surfaced as a suggested reply in the Front conversation view.
 
 <Note>
   Support Drafts is available on the **Growth** and **Scale** plans. If you're on the Starter plan and want to trial this feature, contact your account manager.
@@ -60,7 +58,7 @@ Connect your helpdesk in **Dashboard → Integrations → Helpdesk**. Once conne
 
 Churnlane drafts replies from real product data, not from a static knowledge base. This distinction matters when a customer's problem is caused by something that happened in their specific account.
 
-For example: if your SSO provider rotated a certificate and the customer's login is broken as a result, Churnlane already knows about the certificate rotation event (pulled from your integration logs) and drafts a reply that explains the cause and the fix — not a generic "please try clearing your cache" response.
+For example: if a login failure is caused by an authentication event Churnlane has already detected through your connected integrations, it drafts a reply that explains the cause and the fix — not a generic "please try clearing your cache" response.
 
 Other examples of context-aware accuracy:
 
